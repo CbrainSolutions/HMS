@@ -1,0 +1,298 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="mstAdmin.master.cs" Inherits="MainProjectHos.mstAdmin" %>
+
+<%@ Register Assembly="obout_TextMenu" Namespace="OboutInc.TextMenu" TagPrefix="tm" %>
+<%--<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc" %>--%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+        <%=Styles.Render("~/Content/oldcss/mstmain/style.css") %>
+        <%--<link href="Style/style.css" rel="stylesheet" type="text/css" />--%>
+    </asp:ContentPlaceHolder>
+</head>
+<body style="background-color: #E0F0E8;">
+    <form id="form1" runat="server" style="text-align: center;">
+    <asp:ScriptManager ID="ToolkitScriptManager1" runat="server"></asp:ScriptManager>
+    <%--<cc:toolkitscriptmanager ID="ToolkitScriptManager1" runat="server">
+    </cc:toolkitscriptmanager>--%>
+    <div style="text-align: center; background-color: #E0F0E8;">
+        <table width="100%" style="background-color: #E0F0E8">
+            <tr>
+                <td align="center">
+                    <table width="80%" cellpadding="0" cellspacing="0" style="text-align: center; height: 700px;">
+                        <tr>
+                            <td style="width: 5px; background-color: Black;">
+                            </td>
+                            <td valign="top">
+                                <table width="100%" cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <td colspan="2" style="background-color: Black; height: 5px; vertical-align: top;">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" align="center" style="height: 90px; vertical-align: top;">
+                                            <asp:Image ID="Image1" runat="server" ImageUrl="~/images/BannerImages/HospitalNameSevadham.png"
+                                                Width="1048px" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4">
+                                            <%--<asp:UpdateProgress runat="server" ID="PageUpdateProgress">
+                                                <ProgressTemplate>
+                                                    <img src="images/spiffygif_30x30.gif" alt="*" />
+                                                </ProgressTemplate>
+                                            </asp:UpdateProgress>--%>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="left" style="height: 15px; border-top: 2px Solid Green; border-bottom: 2px Solid #666699;">
+                                            <asp:Label ID="lblUserName" runat="server" Text="" Font-Bold="true" Font-Names="Verdana"
+                                                Font-Size="11px" ForeColor="#3b3535"></asp:Label>
+                                        </td>
+                                        <td align="right" style="height: 15px; border-top: 2px Solid Green; border-bottom: 2px Solid #666699;">
+                                            <asp:LinkButton ID="lnkChangePass" runat="server" Font-Bold="true" Font-Names="Verdana"
+                                                Font-Size="11px" ForeColor="#3b3535">Change Password?</asp:LinkButton>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <asp:LinkButton ID="lnkLogOut" runat="server" Font-Bold="true" Font-Names="Verdana"
+                                                Font-Size="11px" ForeColor="#3b3535" Style="padding-right: 5px;" OnClick="lnkLogOut_Click">LogOut </asp:LinkButton>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="background-color: #1e9ca1; height: 20px; border-bottom: 2px Solid #1789bb;">
+                                            <div style="text-align: left">
+                                                <asp:Menu ID="Menu1" runat="server" Orientation="Horizontal" BackColor="#1789bb"
+                                                    DynamicHorizontalOffset="2" Font-Names="Verdana" Font-Size="0.8em" ForeColor="White"
+                                                    StaticSubMenuIndent="10px" Width="100%" StaticEnableDefaultPopOutImage="false"
+                                                    StaticMenuItemStyle-HorizontalPadding="10px">
+                                                    <DynamicHoverStyle BackColor="#990000" ForeColor="White" />
+                                                    <DynamicMenuItemStyle HorizontalPadding="5px" VerticalPadding="2px" CssClass="align" />
+                                                    <DynamicMenuStyle BackColor="#1789bb" Width="165px" />
+                                                    <DynamicSelectedStyle BackColor="#990000" />
+                                                    <Items>
+                                                        <asp:MenuItem Text="Masters" Value="Main">
+                                                            <asp:MenuItem Text="Employee Master" Value="Employee Master" NavigateUrl="~/frmEmployeeMaster.aspx"
+                                                                ToolTip="Employee Master"></asp:MenuItem>
+                                                            <asp:MenuItem Text="User Authorisation" Value="User Authorisation" NavigateUrl="~/UserAuthentication/frmUserAuthentication.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Department Master" Value="Department Master" NavigateUrl="~/frmDepartmentMaster.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Room Rate Master" Value="Room Rate Master" NavigateUrl="~/frmRoomCategoryMaster.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Ward Master" Value="Ward Master" NavigateUrl="~/frmRoomMaster.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Bed Master" Value="Bed Master" NavigateUrl="~/frmBedMaster.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Supplier Master" Value="Supplier Master" NavigateUrl="~/frmSupplierMaster.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Initial Master" Value="Initial Master" NavigateUrl="~/frmInitialsMaster.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Designation Master" Value="Designation Master" NavigateUrl="~/frmDesignationMaster.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Gender Master" Value="Gender Master" NavigateUrl="~/frmGenderMaster.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Religion Master" Value="Religion Master" NavigateUrl="~/frmReligionMaster.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Caste Master" Value="Caste Master" NavigateUrl="~/frmCastMaster.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Unit Master" Value="Unit Master" NavigateUrl="~/frmUnitMaster.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Charge Master" Value="Charge Master" NavigateUrl="~/frmChargeCategory.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Bank Master" Value="Bank Master" NavigateUrl="~/BankTransaction/frmBankMaster.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Insurance Master" Value="Insurance Master" NavigateUrl="~/frmInsuranceComMaster.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Company Master" Value="Company Master" NavigateUrl="~/frmCompanyMaster.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Tablet Master" Value="Tablet Master" NavigateUrl="~/frmProductMaster.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Occupation Master" Value="Occupation Master" NavigateUrl="~/frmOccupationMaster.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Doctor Department" Value="Doctor Department" NavigateUrl="~/frmOperationCatMaster.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Shift Master" Value="Shift Master" NavigateUrl="~/frmShiftMaster.aspx">
+                                                                <asp:MenuItem Text="Shift Allocation" Value="Shift Allocation" NavigateUrl="~/frmShiftAllocation.aspx">
+                                                                </asp:MenuItem>
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Operation Master" Value="Operation Master" NavigateUrl="~/frmOperationMaster.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Incharge Doctor" Value="Incharge Doctor" NavigateUrl="~/frmDocCategory.aspx">
+                                                                </asp:MenuItem>
+                                                            <asp:MenuItem Text="O.T.MedicineMaster" Value="O.T.MedicineMaster" NavigateUrl="~/frmTabletMaster.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Prescription" Value="Prescription" NavigateUrl="~/frmPrescription.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Visiting Doctor" Value="Visiting Doctor" NavigateUrl="~/AnaesthetistMaster.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="NurseMaster" Value="NurseMaster" NavigateUrl="~/frmNurseMaster.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="SurgeryMaster" Value="Surgery Master" NavigateUrl="~/frmSurgeryMaster.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="DailyNursingManagement" Value="DailyNursingManagement" NavigateUrl="~/frmDailyNursingManagement.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Upload Documents" Value="Upload Documents" NavigateUrl="~/frmUploadDocuments.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="View Documents" Value="View Documents" NavigateUrl="~/frmViewDocument.aspx">
+                                                            </asp:MenuItem>
+                                                        </asp:MenuItem>
+                                                        <asp:MenuItem Text="Patient Masters" Value="Main">
+                                                            <asp:MenuItem Text="New Patient Registration" Value="New Patient Registration" NavigateUrl="~/frmOPDPatientDetail.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Registered Patient" Value="Visited Registered Patient" NavigateUrl="~/frmAdmitPatient.aspx">
+                                                            </asp:MenuItem>
+                                                            <%--<asp:MenuItem Text="Allocate PatientToDoctor" Value="Allocate Patient To Doctor"
+                                                                NavigateUrl="~/frmPatientAllocToDoc.aspx"></asp:MenuItem>--%>
+                                                            <asp:MenuItem Text="Allocate Consulting Doctor" Value="Allocate Consulting Doctor" NavigateUrl="~/frmAllocConsultDoctorToPatient.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Bed Allocation" NavigateUrl="#">
+                                                                <asp:MenuItem Text="Bed Allocation To Patient" Value="Bed Allocation To Patient"
+                                                                    NavigateUrl="~/BedStatus/frmBedAllocToPatient.aspx"></asp:MenuItem>
+                                                                <%--<asp:MenuItem Text="OT Bed Allocation To Patient" Value="OT Bed Allocation To Patient"
+                                                                    NavigateUrl="~/Scheduling/frmOTScheduling.aspx"></asp:MenuItem>--%>
+                                                            </asp:MenuItem>
+                                                        </asp:MenuItem>
+                                                        <asp:MenuItem Text="Payroll" Value="Main">
+                                                            
+                                                            <asp:MenuItem Text="Allowance/Deductions" Value="Allowance/Deductions" NavigateUrl="~/Payroll/frmAllowanceDeduction.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Salary Calculation" Value="Salary Calculation" NavigateUrl="~/Payroll/frmSalaryCalculation.aspx">
+                                                            </asp:MenuItem>
+                                                        </asp:MenuItem>
+                                                        <asp:MenuItem Text="Laboratory Test" Value="Main">
+                                                            <asp:MenuItem Text="Test Master" Value="Test Master" NavigateUrl="~/frmTestMaster.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Test Parameter" Value="Test Parameter" NavigateUrl="~/frmTestParameters.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Test Method" Value="Test Method" NavigateUrl="~/frmTestMethodMaster.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Test Invoice" Value="Test Invoice" NavigateUrl="~/frmTestAllocation.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Pathology Result" Value="Pathology Result" NavigateUrl="~/frmPathology.aspx">
+                                                            </asp:MenuItem>
+                                                        </asp:MenuItem>
+                                                        <asp:MenuItem Text="Billing" Value="Main">
+                                                            <asp:MenuItem Text="OTPatientMedicineBill" Value="OTPatientMedicineBill" NavigateUrl="~/frmOTMedicineBill.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Discharge" Value="Discharge" NavigateUrl="~/frmMakeDischarge.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Medical Certificate" Value="Medical Certificate" NavigateUrl="~/PatientStatus/frmMedicalCertificate.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Death Certificate" Value="Death Certificate" NavigateUrl="~/PatientStatus/frmDeathCertificate.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Birth Certificate" Value="Birth Certificate" NavigateUrl="~/PatientStatus/frmBirthCertificate.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Patient Bill" Value="Patient Bill" NavigateUrl="Billing/frmPatientInvoice.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Patient Receipt" Value="Patient Receipt" NavigateUrl="~/Billing/frmCustomerTransaction.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Refund Payment" Value="Refund Payment" NavigateUrl="~/Billing/frmAdvancePayment.aspx">
+                                                            </asp:MenuItem>
+                                                            <%--<asp:MenuItem Text="ICU Daily Invoice" Value="ICU Invoice" NavigateUrl="~/Billing/frmICUInvoice.aspx">
+                                                            </asp:MenuItem>--%>
+                                                            <%--<asp:MenuItem Text="ICU Invoice" Value="ICU Invoice" NavigateUrl="~/Billing/frmICUInvoiceDischargeBilling.aspx">
+                                                            </asp:MenuItem>--%>
+                                                            <asp:MenuItem Text="Insurance Claim" Value="Insurance Claim" NavigateUrl="~/InsuranceClaim/frmInsuranceClaim.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Insurance Approval" Value="Insurance Approval" NavigateUrl="~/InsuranceClaim/frmClaimApproval.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Company Claim" Value="Company Claim" NavigateUrl="~/InsuranceClaim/frmCompanyClaim.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Company Approval" Value="Company Approval" NavigateUrl="~/InsuranceClaim/frmCompanyClaimApproval.aspx">
+                                                            </asp:MenuItem>
+                                                        </asp:MenuItem>
+                                                        <asp:MenuItem Text="Store" Value="Main">
+                                                            <asp:MenuItem Text="Purchase Order" Value="Purchase Order" NavigateUrl="~/Store/frmPurchaseOrder.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Purchase Invoice" Value="Purchase Invoice" NavigateUrl="~/Store/frmPurchaseInvoice.aspx">
+                                                            </asp:MenuItem>
+                                                            <%--<asp:MenuItem Text="Issue Material" Value="Issue Material" NavigateUrl="~/Store/frmIssueMaterial.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Debit Note" Value="Debit Note" NavigateUrl="~/Store/frmDebitNote.aspx">
+                                                            </asp:MenuItem>--%>
+                                                            <asp:MenuItem Text="Supplier Payment" Value="Supplier Payment" NavigateUrl="~/Store/frmSupplierPayment.aspx">
+                                                            </asp:MenuItem>
+                                                        </asp:MenuItem>
+                                                        <asp:MenuItem Text="Report" Value="Main">
+                                                            <asp:MenuItem Text="BedConsumptionReport" Value="BedConsumptionReport" NavigateUrl="~/PathalogyReport/frmBedConsumption.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="DailyOPD/IPDPatientDetails" Value="DailyOPD/IPDPatientDetails" NavigateUrl="~/PathalogyReport/frmIPDPatientReport.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Patient History" Value="Patient History" NavigateUrl="~/PathalogyReport/frmHistoryReport.aspx">
+                                                            </asp:MenuItem>
+                                                             <%--<asp:MenuItem Text="Patient Documents Search" Value="Patient Document Report" NavigateUrl="~/PathalogyReport/frmPatientwiseDocumentSearch.aspx">
+                                                            </asp:MenuItem>--%>
+                                                            <asp:MenuItem Text="Patient Outstanding" Value="Patient Outstanding" NavigateUrl="~/PathalogyReport/frmOutstandingReport.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Datewise Collection" Value="Transaction Typewise Report" NavigateUrl="~/PathalogyReport/frmDatewiseCollection.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Salary Report" Value="Salary Report" NavigateUrl="~/Reports/MonthwiseSalaryReport.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Patient Ledger" Value="Patient Ledger" NavigateUrl="~/PathalogyReport/frmPatientLedger.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Supplier Ledger" Value="Supplier Ledger" NavigateUrl="~/PathalogyReport/frmSupplierLedger.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Item Stock Detail" Value="Stock Detail" NavigateUrl="~/PathalogyReport/frmStockDetailReport.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Stock Detail Report" Value="Stock Detail Report" NavigateUrl="~/PathalogyReport/frmItemStockReport.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Supplier Outstanding" Value="Supplier Outstanding" NavigateUrl="~/PathalogyReport/frmSupplierOutstandingReport.aspx">
+                                                            </asp:MenuItem>
+                                                            <%--<asp:MenuItem Text="Debit Note Report" Value="Debit Note Report" NavigateUrl="~/PathalogyReport/frmDebitNoteReport.aspx">
+                                                            </asp:MenuItem>--%>
+                                                            <asp:MenuItem Text="TDS Report" Value="TDS Report" NavigateUrl="~/PathalogyReport/frmTDSReport.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="OTBedAllocatePatientReport" Value="OTBedAllocatePatientReport" NavigateUrl="~/PathalogyReport/frmOTBedPatientReport.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="ConsultingDoctorManagement" Value="ConsultingDoctorManagement" NavigateUrl="~/PathalogyReport/frmDatewiseConsultDoctorReport.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="DailyNursingTreatmentChart" Value="DailyNursingTreatmentChart" NavigateUrl="~/PathalogyReport/frmDailyNursingChart.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="NewServicesReport" Value="NewServicesReport" NavigateUrl="~/PathalogyReport/frmNewServicesReport.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="AdmitedPatientList" Value="AdmitedPatientList" NavigateUrl="~/PathalogyReport/frmAdmitedPatientListReport.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="DischargePatientList" Value="DischargePatientList" NavigateUrl="~/PathalogyReport/frmDischargePatientListReport.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="MonthwiseIPDRecord" Value="MonthwiseIPDRecord" NavigateUrl="~/PathalogyReport/frmIPDRegistrationBookReport.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Daily Collection IPDOPD" Value="Daily Collection IPDOPD" NavigateUrl="~/PathalogyReport/frmDailyCollectionIPDOPD.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Summarized Details" Value="Summarized Details" NavigateUrl="~/PathalogyReport/frmSummarizedDetailReport.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Datewise Insurance Claim" Value="Datewise Insurance Claim" NavigateUrl="~/PathalogyReport/frmDatewiseInsuranceClaim.aspx">
+                                                            </asp:MenuItem>
+                                                            <asp:MenuItem Text="Datewise Company Claim" Value="Datewise Company Claim" NavigateUrl="~/PathalogyReport/frmDatewiseCompanyClaim.aspx">
+                                                            </asp:MenuItem>
+                                                        </asp:MenuItem>
+                                                    </Items>
+                                                    <StaticHoverStyle BackColor="#990000" ForeColor="White" />
+                                                    <StaticMenuItemStyle VerticalPadding="2px" Width="120px" />
+                                                    <StaticSelectedStyle BackColor="#990000" />
+                                                </asp:Menu>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="height: 600px; vertical-align: top;">
+                                            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                                            </asp:ContentPlaceHolder>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="background-color: Black; height: 5px;">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td colspan="2" style="width: 5px; background-color: Black;">
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+    </form>
+</body>
+</html>

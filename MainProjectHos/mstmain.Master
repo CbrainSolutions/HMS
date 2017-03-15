@@ -1,0 +1,135 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="mstmain.master.cs" Inherits="MainProjectHos.mstmain" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <title>सेवाधाम हॉस्पिटल </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <%=Styles.Render("~/Content/oldcss/mstmain/style.css") %>
+    <%=Styles.Render("~/Content/oldcss/mstmain/coin-slider.css") %>
+    <%=Scripts.Render("~/Scripts/oldscripts/mstmain/jquery-1.4.2.min.js") %>
+    <%=Scripts.Render("~/Scripts/oldscripts/mstmain/script.js") %>
+    <%=Scripts.Render("~/Scripts/oldscripts/mstmain/coin-slider.min.js") %>
+    
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div class="main">
+        <div class="header">
+            <div class="header_resize">
+                <div class="logo">
+                    <img src="images/BannerImages/HospitalNameSevadham.png" style="width: 960px; height: 150px" />
+                </div>
+                <div class="menu_nav">
+                    <ul>
+                        <li><a href="Default.aspx">Home Page</a></li>
+                        <li><a href="Default.aspx">Services</a></li>
+                        <li><a href="Default.aspx">About Us</a></li>
+                        <li><a href="Default.aspx">Contact Us</a></li>
+                        <li><a href="Default.aspx">Book Appointment</a></li>
+                        <li><a href="frmlogin.aspx">Login</a></li>
+                    </ul>
+                </div>
+                <div class="clr">
+                </div>
+                <div class="slider">
+                    <div id="coin-slider">
+                        <a href="#">
+                            <img src="Content/OldCSS/mstmain/images/Doc4.jpg" width="960" height="360" alt="" /><span> </span></a>
+                        <a href="#">
+                            <img src="Content/OldCSS/mstmain/images/doctors1.jpg" width="960" height="360" alt="" /><span> </span>
+                        </a>
+                        <a href="#">
+                            <img src="Content/OldCSS/mstmain/images/RecepStaff.JPG" width="960" height="360" alt="" /><span> </span>
+                        </a>
+                    </div>
+                    <div class="clr">
+                    </div>
+                </div>
+                <div class="clr">
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="content_resize">
+                <div>
+                    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                    </asp:ContentPlaceHolder>
+                </div>
+                <div class="clr">
+                </div>
+            </div>
+        </div>
+        <div class="fbg">
+            <div class="fbg_resize">
+                <div class="col c1">
+                    <h2>
+                        <span>Image</span> Gallery</h2>
+                    <%--<a href="#">
+                        <img src="images/Slice!T.jpg" width="75" height="75" alt="" class="gal" />
+                        <%--<img src="images/fotolia_28051798.jpg" width="75" height="75" alt="" class="gal" />--%></a>
+                    <%--<a href="#">
+                         <img src="images/Main_01.jpg" width="75" height="75" alt="" class="gal" />
+                        <%--<img src="images/fotolia_30308648_xs.jpg" width="75" height="75" alt="" class="gal" /></a>--%>
+                    <a href="#">
+                        <img src="images/GW1.JPG" width="75" height="75" alt="" class="gal" />
+                        <%--<img src="images/joint_replacement.jpg" width="75" height="75" alt="" class="gal" />--%></a>
+                    <a href="#">
+                        <img src="images/LabourRoom.JPG" width="75" height="75" alt="" class="gal" />
+                        <%--<img src="images/kidney_transplant.jpg" width="75" height="75" alt="" class="gal" />--%></a>
+                    <a href="#">
+                        <img src="images/NICU.JPG" width="75" height="75" alt="" class="gal" />
+                        <%--<img src="images/spine_surgery.jpg" width="75" height="75" alt="" class="gal" />--%></a>
+                    <a href="#">
+                        <img src="images/WaitingArea.JPG" width="75" height="75" alt="" class="gal" />
+                        <%--<img src="images/cardiology_1.jpg" width="75" height="75" alt="" class="gal" />--%></a>
+                    <a href="#">
+                        <img src="images/ICU1.JPG" width="75" height="75" alt="" class="gal" />
+                        <%--<img src="images/cardiology_1.jpg" width="75" height="75" alt="" class="gal" />--%></a>
+                </div>
+                <div class="col c2">
+                    <h2>
+                        <span>Services</span> Overview</h2>
+                    <ul class="fbg_ul">
+                        <li>1)TIE-UP INSURANCE </li>
+                        <li>2)TIE-UP COMPANY </li>
+                        <li>3)IPF SCHEME</li>
+                        <li>4)AMBULANCE SERVICE </li>
+                        <li>5)WARDS TYPE </li>
+                    </ul>
+                </div>
+                <div class="col c3">
+                    <h2>
+                        Contact Us </h2>
+                    <p>
+                        Contact Us On Following Details:
+                    </p>
+                    <p class="contact_info">
+                        Address: सेवाधाम हॉस्पिटल, तळेगाव दाभाडे(स्टेशन),
+                        <br />
+                        Talegaon Dabhade, Pune:410507<br />
+                        Phone No.: 02114 - 222456 / 224572<br />
+                    </p>
+                </div>
+                <div class="clr">
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="footer_resize">
+                <p class="lf">
+                    &copy;Copyright सेवाधाम हॉस्पिटल @2016</p>
+                <p class="rf">
+                    Design & Developed by CBrain Soft Solutions </p>
+                <div style="clear: both;">
+                </div>
+            </div>
+        </div>
+    </div>
+    </form>
+</body>
+</html>
+
