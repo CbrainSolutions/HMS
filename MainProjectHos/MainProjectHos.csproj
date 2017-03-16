@@ -226,15 +226,22 @@
     <Content Include="frmCompanyMaster.aspx" />
     <Content Include="frmDepartmentMaster.aspx" />
     <Content Include="frmDesignationMaster.aspx" />
+    <Content Include="frmDocCategory.aspx" />
     <Content Include="frmEmployeeMaster.aspx" />
     <Content Include="frmGenderMaster.aspx" />
     <Content Include="frmInitialsMaster.aspx" />
     <Content Include="frmInsuranceComMaster.aspx" />
     <Content Include="frmLogin.aspx" />
+    <Content Include="frmOccupationMaster.aspx" />
+    <Content Include="frmOperationCatMaster.aspx" />
+    <Content Include="frmOperationMaster.aspx" />
+    <Content Include="frmPrescription.aspx" />
     <Content Include="frmProductMaster.aspx" />
     <Content Include="frmReligionMaster.aspx" />
     <Content Include="frmRoomCategoryMaster.aspx" />
+    <Content Include="frmShiftAllocation.aspx" />
     <Content Include="frmSupplierMaster.aspx" />
+    <Content Include="frmTabletMaster.aspx" />
     <Content Include="frmUnitMaster.aspx" />
     <Content Include="mstAdmin.Master" />
     <Content Include="Mstlogin.Master" />
@@ -360,6 +367,13 @@
     <Compile Include="frmDesignationMaster.aspx.designer.cs">
       <DependentUpon>frmDesignationMaster.aspx</DependentUpon>
     </Compile>
+    <Compile Include="frmDocCategory.aspx.cs">
+      <DependentUpon>frmDocCategory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frmDocCategory.aspx.designer.cs">
+      <DependentUpon>frmDocCategory.aspx</DependentUpon>
+    </Compile>
     <Compile Include="frmEmployeeMaster.aspx.cs">
       <DependentUpon>frmEmployeeMaster.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -395,6 +409,34 @@
     <Compile Include="frmLogin.aspx.designer.cs">
       <DependentUpon>frmLogin.aspx</DependentUpon>
     </Compile>
+    <Compile Include="frmOccupationMaster.aspx.cs">
+      <DependentUpon>frmOccupationMaster.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frmOccupationMaster.aspx.designer.cs">
+      <DependentUpon>frmOccupationMaster.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmOperationCatMaster.aspx.cs">
+      <DependentUpon>frmOperationCatMaster.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frmOperationCatMaster.aspx.designer.cs">
+      <DependentUpon>frmOperationCatMaster.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmOperationMaster.aspx.cs">
+      <DependentUpon>frmOperationMaster.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frmOperationMaster.aspx.designer.cs">
+      <DependentUpon>frmOperationMaster.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmPrescription.aspx.cs">
+      <DependentUpon>frmPrescription.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frmPrescription.aspx.designer.cs">
+      <DependentUpon>frmPrescription.aspx</DependentUpon>
+    </Compile>
     <Compile Include="frmProductMaster.aspx.cs">
       <DependentUpon>frmProductMaster.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -416,12 +458,26 @@
     <Compile Include="frmRoomCategoryMaster.aspx.designer.cs">
       <DependentUpon>frmRoomCategoryMaster.aspx</DependentUpon>
     </Compile>
+    <Compile Include="frmShiftAllocation.aspx.cs">
+      <DependentUpon>frmShiftAllocation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frmShiftAllocation.aspx.designer.cs">
+      <DependentUpon>frmShiftAllocation.aspx</DependentUpon>
+    </Compile>
     <Compile Include="frmSupplierMaster.aspx.cs">
       <DependentUpon>frmSupplierMaster.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="frmSupplierMaster.aspx.designer.cs">
       <DependentUpon>frmSupplierMaster.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmTabletMaster.aspx.cs">
+      <DependentUpon>frmTabletMaster.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frmTabletMaster.aspx.designer.cs">
+      <DependentUpon>frmTabletMaster.aspx</DependentUpon>
     </Compile>
     <Compile Include="frmUnitMaster.aspx.cs">
       <DependentUpon>frmUnitMaster.aspx</DependentUpon>
