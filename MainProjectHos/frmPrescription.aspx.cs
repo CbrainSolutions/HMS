@@ -127,7 +127,7 @@ namespace MainProjectHos
             if (ddlPatient.SelectedIndex > 0)
             {
                 EntityPatientAlloc objTxt = new PatientAllocDocBLL().GetPatientType(Convert.ToInt32(ddlPatient.SelectedValue));
-                CalDate.StartDate = objTxt.AdmitDate;
+                //CalDate.StartDate = objTxt.AdmitDate;
             }
         }
 

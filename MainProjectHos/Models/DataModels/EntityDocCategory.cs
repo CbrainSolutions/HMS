@@ -86,5 +86,7 @@ namespace MainProjectHos.Models.DataModels
                 }
             }
         }
+
+        public decimal Charges { get; internal set; }
     }
 }

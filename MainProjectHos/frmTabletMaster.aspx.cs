@@ -49,7 +49,7 @@ namespace MainProjectHos
             ldt = mobjReligionBLL.GetNewReligionCode();
             txtReligionCode.Text = ldt.Rows[0][0].ToString();
             txtReligionDesc.Text = string.Empty;
-            this.programmaticModalPopup.Show();
+            //this.programmaticModalPopup.Show();
         }
 
         public void GetReligion()
@@ -97,7 +97,7 @@ namespace MainProjectHos
                     {
                         GetReligion();
                         lblMessage.Text = "Record Inserted Successfully";
-                        this.programmaticModalPopup.Hide();
+                        //this.programmaticModalPopup.Hide();
                     }
                     else
                     {
@@ -115,7 +115,7 @@ namespace MainProjectHos
                 DataTable ldt = new DataTable();
                 if (e.CommandName == "EditReligion")
                 {
-                    this.programmaticModalPopupEdit.Show();
+                    //this.programmaticModalPopupEdit.Show();
                     int linIndex = Convert.ToInt32(e.CommandArgument);
                     GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
                     LinkButton lnkReligionCode = (LinkButton)gvr.FindControl("lnkReligionCode");
@@ -151,7 +151,7 @@ namespace MainProjectHos
                 {
                     GetReligion();
                     lblMessage.Text = "Record Updated Successfully";
-                    this.programmaticModalPopup.Hide();
+                    //this.programmaticModalPopup.Hide();
                 }
                 else
                 {
@@ -199,7 +199,7 @@ namespace MainProjectHos
                         cnt = mobjReligionBLL.DeleteReligion(entReligion);
                         if (cnt > 0)
                         {
-                            this.modalpopupDelete.Hide();
+                            //this.modalpopupDelete.Hide();
 
                             lblMessage.Text = "Record Deleted Successfully....";
 
@@ -237,7 +237,7 @@ namespace MainProjectHos
                 CheckBox chkDelete = (CheckBox)drv.FindControl("chkDelete");
                 if (chkDelete.Checked)
                 {
-                    this.modalpopupDelete.Show();
+                    //this.modalpopupDelete.Show();
                 }
             }
         }

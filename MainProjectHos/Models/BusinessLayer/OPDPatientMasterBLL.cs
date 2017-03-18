@@ -26,16 +26,30 @@ namespace MainProjectHos.Models.BusinessLayer
             try
             {
                 ldt = (from tbl in objData.tblPatientMasters
+                       join tblAdmit in objData.tblPatientAdmitDetails
+                       on tbl.PKId equals tblAdmit.PatientId
+                       //join tblDoct  in objData.tblEmployees
+                       //on tbl.DeptDoctorId equals tblDoct.PKId
                        where tbl.IsDelete == false
+                       orderby tblAdmit.AdmitId descending
                        select new EntityPatientMaster
                        {
-                           FullName = tbl.PatientFirstName + " " + tbl.PatientMiddleName + " " + tbl.PatientLastName,
+                           FullName = (tbl.PatientFirstName) + " " + (tbl.PatientMiddleName) + " " + (tbl.PatientLastName),
                            Age = Convert.ToInt32(tbl.Age),
+                           AgeIn = tbl.AgeIn,
+                           Weight = tbl.Weight,
+                           PatientAdmitDate = Convert.ToDateTime(tbl.AdminDate),
+                           //EmpName = (tblDoct.EmpFirstName) + " " + (tblDoct.EmpMiddleName) + " " + (tblDoct.EmpLastName),
                            BirthDate = Convert.ToDateTime(tbl.BirthDate),
                            GenderDesc = tbl.Gender == 1 ? "Male" : "Female",
                            PatientCode = tbl.PatientCode,
                            PatientAddress = tbl.Address,
-                           PatientContactNo = tbl.ContactNo
+                           PatientContactNo = tbl.ContactNo,
+                           AdmitId = tblAdmit.AdmitId,
+                           PatientType = tbl.PatientType,
+                           //EndoscopyFile=tbl.EndoscopyFile.ToArray(),
+                           //AudiometryFile=tbl.AudiometryFile.ToArray()
+
                        }).ToList();
             }
             catch (Exception ex)
@@ -352,6 +366,8 @@ namespace MainProjectHos.Models.BusinessLayer
                        where (tbl.PatientCode.Contains(Prefix)
                        || tbl.FullName.ToUpper().ToString().Contains(Prefix.ToString().ToUpper())
                        || tbl.PatientAddress.ToUpper().ToString().Contains(Prefix.ToUpper().ToString()) || tbl.Age.ToString().ToUpper().Contains(Prefix.ToUpper())
+                       || tbl.PatientContactNo.ToUpper().ToString().Contains(Prefix.ToString().ToUpper())
+                       || tbl.PatientType.ToUpper().ToString().Contains(Prefix.ToString().ToUpper())
                        || tbl.GenderDesc.ToString().ToUpper().Contains(Prefix.ToUpper()))
                        select tbl).ToList();
             }
@@ -368,10 +384,52 @@ namespace MainProjectHos.Models.BusinessLayer
             try
             {
                 lst = (from tbl in objData.tblPatientMasters
+                       orderby tbl.PatientFirstName
                        select new EntityPatientMaster
                        {
                            PatientId = tbl.PKId,
                            FullName = tbl.PatientFirstName + " " + tbl.PatientMiddleName + " " + tbl.PatientLastName,
+                       }).ToList();
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return lst;
+        }
+
+        public List<EntityPatientMaster> GetAllPatientssearch(string Prefix)
+        {
+            List<EntityPatientMaster> lst = null;
+            try
+            {
+                lst = (from tbl in objData.tblPatientMasters
+                       where tbl.PatientFirstName.ToUpper().ToString().Contains(Prefix.ToString().ToUpper())
+                       select new EntityPatientMaster
+                       {
+                           PatientId = tbl.PKId,
+                           FullName = tbl.PatientFirstName + " " + tbl.PatientMiddleName + " " + tbl.PatientLastName,
+                       }).ToList();
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return lst;
+        }
+
+        public List<EntityPatientMaster> GetAllIPDPatients()
+        {
+            List<EntityPatientMaster> lst = null;
+            try
+            {
+                lst = (from tbl in objData.tblPatientMasters
+                       select new EntityPatientMaster
+                       {
+                           PatientId = tbl.PKId,
+                           FullName = tbl.PatientFirstName + ' ' + tbl.PatientMiddleName + ' ' + tbl.PatientLastName,
                        }).ToList();
 
             }

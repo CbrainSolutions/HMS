@@ -79,4 +79,3 @@ F:\MyApplication\SevadhamHospital\CBrain\MainProjectHos\MainProjectHos\obj\Debug
 F:\MyApplication\SevadhamHospital\CBrain\MainProjectHos\MainProjectHos\bin\obout_TextMenu.dll
 F:\MyApplication\SevadhamHospital\CBrain\MainProjectHos\MainProjectHos\bin\TimePicker.dll
 F:\MyApplication\SevadhamHospital\CBrain\MainProjectHos\MainProjectHos\bin\AjaxMin.dll
-F:\MyApplication\SevadhamHospital\CBrain\MainProjectHos\MainProjectHos\obj\Debug\MainProjectHos.csprojResolveAssemblyReference.cache

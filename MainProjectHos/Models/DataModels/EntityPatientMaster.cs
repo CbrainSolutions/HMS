@@ -90,5 +90,7 @@ namespace MainProjectHos.Models.DataModels
         //public byte[] AudiometryFile { get; set; }
 
         public string Weight { get; set; }
+        public string CompName { get; internal set; }
+        public string InsuName { get; internal set; }
     }
 }

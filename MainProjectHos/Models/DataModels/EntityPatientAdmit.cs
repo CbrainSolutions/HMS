@@ -220,5 +220,7 @@ namespace MainProjectHos.Models.DataModels
         public int DeptCategory { get; set; }
         public int DeptDoctorId { get; set; }
         public string OPDNo { get; set; }
+        public string InsuName { get; internal set; }
+        public string Weight { get; internal set; }
     }
 }

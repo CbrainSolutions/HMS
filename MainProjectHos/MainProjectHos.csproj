@@ -195,6 +195,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AnaesthetistMaster.aspx" />
     <Content Include="BankTransaction\frmBankMaster.aspx" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -221,9 +222,13 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="frmAdminMain.aspx" />
+    <Content Include="frmAdmitPatient.aspx" />
+    <Content Include="frmAllocConsultDoctorToPatient.aspx" />
+    <Content Include="frmBedAllocToPatient.aspx" />
     <Content Include="frmBedMaster.aspx" />
     <Content Include="frmCastMaster.aspx" />
     <Content Include="frmCompanyMaster.aspx" />
+    <Content Include="frmDailyNursingManagement.aspx" />
     <Content Include="frmDepartmentMaster.aspx" />
     <Content Include="frmDesignationMaster.aspx" />
     <Content Include="frmDocCategory.aspx" />
@@ -232,16 +237,24 @@
     <Content Include="frmInitialsMaster.aspx" />
     <Content Include="frmInsuranceComMaster.aspx" />
     <Content Include="frmLogin.aspx" />
+    <Content Include="frmNurseMaster.aspx" />
     <Content Include="frmOccupationMaster.aspx" />
+    <Content Include="frmOPDPatientDetail.aspx" />
     <Content Include="frmOperationCatMaster.aspx" />
     <Content Include="frmOperationMaster.aspx" />
+    <Content Include="frmPathology.aspx" />
     <Content Include="frmPrescription.aspx" />
     <Content Include="frmProductMaster.aspx" />
     <Content Include="frmReligionMaster.aspx" />
     <Content Include="frmRoomCategoryMaster.aspx" />
     <Content Include="frmShiftAllocation.aspx" />
     <Content Include="frmSupplierMaster.aspx" />
+    <Content Include="frmSurgeryMaster.aspx" />
     <Content Include="frmTabletMaster.aspx" />
+    <Content Include="frmTestAllocation.aspx" />
+    <Content Include="frmTestMaster.aspx" />
+    <Content Include="frmTestMethodMaster.aspx" />
+    <Content Include="frmTestParameters.aspx" />
     <Content Include="frmUnitMaster.aspx" />
     <Content Include="mstAdmin.Master" />
     <Content Include="Mstlogin.Master" />
@@ -253,6 +266,8 @@
       <SubType>Designer</SubType>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Payroll\frmAllowanceDeduction.aspx" />
+    <Content Include="Payroll\frmSalaryCalculation.aspx" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -307,6 +322,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnaesthetistMaster.aspx.cs">
+      <DependentUpon>AnaesthetistMaster.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AnaesthetistMaster.aspx.designer.cs">
+      <DependentUpon>AnaesthetistMaster.aspx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -332,6 +354,27 @@
     <Compile Include="frmAdminMain.aspx.designer.cs">
       <DependentUpon>frmAdminMain.aspx</DependentUpon>
     </Compile>
+    <Compile Include="frmAdmitPatient.aspx.cs">
+      <DependentUpon>frmAdmitPatient.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frmAdmitPatient.aspx.designer.cs">
+      <DependentUpon>frmAdmitPatient.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmAllocConsultDoctorToPatient.aspx.cs">
+      <DependentUpon>frmAllocConsultDoctorToPatient.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frmAllocConsultDoctorToPatient.aspx.designer.cs">
+      <DependentUpon>frmAllocConsultDoctorToPatient.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmBedAllocToPatient.aspx.cs">
+      <DependentUpon>frmBedAllocToPatient.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frmBedAllocToPatient.aspx.designer.cs">
+      <DependentUpon>frmBedAllocToPatient.aspx</DependentUpon>
+    </Compile>
     <Compile Include="frmBedMaster.aspx.cs">
       <DependentUpon>frmBedMaster.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -352,6 +395,13 @@
     </Compile>
     <Compile Include="frmCompanyMaster.aspx.designer.cs">
       <DependentUpon>frmCompanyMaster.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmDailyNursingManagement.aspx.cs">
+      <DependentUpon>frmDailyNursingManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frmDailyNursingManagement.aspx.designer.cs">
+      <DependentUpon>frmDailyNursingManagement.aspx</DependentUpon>
     </Compile>
     <Compile Include="frmDepartmentMaster.aspx.cs">
       <DependentUpon>frmDepartmentMaster.aspx</DependentUpon>
@@ -409,12 +459,26 @@
     <Compile Include="frmLogin.aspx.designer.cs">
       <DependentUpon>frmLogin.aspx</DependentUpon>
     </Compile>
+    <Compile Include="frmNurseMaster.aspx.cs">
+      <DependentUpon>frmNurseMaster.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frmNurseMaster.aspx.designer.cs">
+      <DependentUpon>frmNurseMaster.aspx</DependentUpon>
+    </Compile>
     <Compile Include="frmOccupationMaster.aspx.cs">
       <DependentUpon>frmOccupationMaster.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="frmOccupationMaster.aspx.designer.cs">
       <DependentUpon>frmOccupationMaster.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmOPDPatientDetail.aspx.cs">
+      <DependentUpon>frmOPDPatientDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frmOPDPatientDetail.aspx.designer.cs">
+      <DependentUpon>frmOPDPatientDetail.aspx</DependentUpon>
     </Compile>
     <Compile Include="frmOperationCatMaster.aspx.cs">
       <DependentUpon>frmOperationCatMaster.aspx</DependentUpon>
@@ -429,6 +493,13 @@
     </Compile>
     <Compile Include="frmOperationMaster.aspx.designer.cs">
       <DependentUpon>frmOperationMaster.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmPathology.aspx.cs">
+      <DependentUpon>frmPathology.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frmPathology.aspx.designer.cs">
+      <DependentUpon>frmPathology.aspx</DependentUpon>
     </Compile>
     <Compile Include="frmPrescription.aspx.cs">
       <DependentUpon>frmPrescription.aspx</DependentUpon>
@@ -472,12 +543,47 @@
     <Compile Include="frmSupplierMaster.aspx.designer.cs">
       <DependentUpon>frmSupplierMaster.aspx</DependentUpon>
     </Compile>
+    <Compile Include="frmSurgeryMaster.aspx.cs">
+      <DependentUpon>frmSurgeryMaster.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frmSurgeryMaster.aspx.designer.cs">
+      <DependentUpon>frmSurgeryMaster.aspx</DependentUpon>
+    </Compile>
     <Compile Include="frmTabletMaster.aspx.cs">
       <DependentUpon>frmTabletMaster.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="frmTabletMaster.aspx.designer.cs">
       <DependentUpon>frmTabletMaster.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmTestAllocation.aspx.cs">
+      <DependentUpon>frmTestAllocation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frmTestAllocation.aspx.designer.cs">
+      <DependentUpon>frmTestAllocation.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmTestMaster.aspx.cs">
+      <DependentUpon>frmTestMaster.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frmTestMaster.aspx.designer.cs">
+      <DependentUpon>frmTestMaster.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmTestMethodMaster.aspx.cs">
+      <DependentUpon>frmTestMethodMaster.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frmTestMethodMaster.aspx.designer.cs">
+      <DependentUpon>frmTestMethodMaster.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmTestParameters.aspx.cs">
+      <DependentUpon>frmTestParameters.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frmTestParameters.aspx.designer.cs">
+      <DependentUpon>frmTestParameters.aspx</DependentUpon>
     </Compile>
     <Compile Include="frmUnitMaster.aspx.cs">
       <DependentUpon>frmUnitMaster.aspx</DependentUpon>
@@ -490,7 +596,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\BusinessLayer\AdvancePaymentBLL.cs" />
+    <Compile Include="Models\BusinessLayer\AllocConsultDoctorToPatientBLL.cs" />
     <Compile Include="Models\BusinessLayer\AllowanceDeductionBLL.cs" />
+    <Compile Include="Models\BusinessLayer\AnaesthetistBLL.cs" />
     <Compile Include="Models\BusinessLayer\BankMasterBLL.cs" />
     <Compile Include="Models\BusinessLayer\BedConsumtionBLL.cs" />
     <Compile Include="Models\BusinessLayer\BedMasterBLL.cs" />
@@ -502,7 +610,6 @@
     <Compile Include="Models\BusinessLayer\ChargeCategoryBLL.cs" />
     <Compile Include="Models\BusinessLayer\CityBLL.cs" />
     <Compile Include="Models\BusinessLayer\ClaimApprovalBLL.cs" />
-    <Compile Include="Models\BusinessLayer\Class1.cs" />
     <Compile Include="Models\BusinessLayer\clsTestAllocation.cs" />
     <Compile Include="Models\BusinessLayer\CompanyBLL.cs" />
     <Compile Include="Models\BusinessLayer\CompanyClaimApprovalBLL.cs" />
@@ -535,10 +642,13 @@
     <Compile Include="Models\BusinessLayer\MakeDischargeBLL.cs" />
     <Compile Include="Models\BusinessLayer\MaterialRequisitionBLL.cs" />
     <Compile Include="Models\BusinessLayer\MterialInwordBLL.cs" />
+    <Compile Include="Models\BusinessLayer\NurseBLL.cs" />
+    <Compile Include="Models\BusinessLayer\NursingManagementBLL.cs" />
     <Compile Include="Models\BusinessLayer\OccupationBLL.cs" />
     <Compile Include="Models\BusinessLayer\OPDBLL.cs" />
     <Compile Include="Models\BusinessLayer\OPDPatientMasterBLL.cs" />
     <Compile Include="Models\BusinessLayer\OpeartionMasterBLL.cs" />
+    <Compile Include="Models\BusinessLayer\OperationCategoryBLL.cs" />
     <Compile Include="Models\BusinessLayer\OTMedicineBillBLL.cs" />
     <Compile Include="Models\BusinessLayer\OTScheduleBLL.cs" />
     <Compile Include="Models\BusinessLayer\OutstandingBLL.cs" />
@@ -579,7 +689,9 @@
     <Compile Include="Models\DataLayer\ListConverter.cs" />
     <Compile Include="Models\DataLayer\SessionWrapper.cs" />
     <Compile Include="Models\DataModels\EnitiyRoomMaster.cs" />
+    <Compile Include="Models\DataModels\EntityAllocaConDocDetails.cs" />
     <Compile Include="Models\DataModels\EntityAllowanceDeduction.cs" />
+    <Compile Include="Models\DataModels\EntityAnaesthetist.cs" />
     <Compile Include="Models\DataModels\EntityBankMaster.cs" />
     <Compile Include="Models\DataModels\EntityBedAllocToPatient.cs" />
     <Compile Include="Models\DataModels\EntityBedMaster.cs" />
@@ -624,10 +736,13 @@
     <Compile Include="Models\DataModels\EntityMaterialRequisition.cs" />
     <Compile Include="Models\DataModels\EntityMatrialInward.cs" />
     <Compile Include="Models\DataModels\EntityMedicine.cs" />
+    <Compile Include="Models\DataModels\EntityNurse.cs" />
+    <Compile Include="Models\DataModels\EntityNursingManagement.cs" />
     <Compile Include="Models\DataModels\EntityOccupation.cs" />
     <Compile Include="Models\DataModels\EntityOPD.cs" />
     <Compile Include="Models\DataModels\EntityOPDBilling.cs" />
     <Compile Include="Models\DataModels\EntityOPDPatient.cs" />
+    <Compile Include="Models\DataModels\EntityOperationCategory.cs" />
     <Compile Include="Models\DataModels\EntityOperationMaster.cs" />
     <Compile Include="Models\DataModels\EntityOTBedAlloc.cs" />
     <Compile Include="Models\DataModels\EntityOTMedicineBill.cs" />
@@ -695,6 +810,20 @@
     </Compile>
     <Compile Include="mstStore.Master.designer.cs">
       <DependentUpon>mstStore.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Payroll\frmAllowanceDeduction.aspx.cs">
+      <DependentUpon>frmAllowanceDeduction.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Payroll\frmAllowanceDeduction.aspx.designer.cs">
+      <DependentUpon>frmAllowanceDeduction.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Payroll\frmSalaryCalculation.aspx.cs">
+      <DependentUpon>frmSalaryCalculation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Payroll\frmSalaryCalculation.aspx.designer.cs">
+      <DependentUpon>frmSalaryCalculation.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site.Master.cs">

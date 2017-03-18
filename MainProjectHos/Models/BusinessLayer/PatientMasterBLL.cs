@@ -280,6 +280,22 @@ namespace MainProjectHos.Models.BusinessLayer
             return ldt;
         }
 
+        public DataTable GetDeptVisitDoctors(int pintReligionId)
+        {
+            DataTable ldt = new DataTable();
+            try
+            {
+                List<SqlParameter> lstParam = new List<SqlParameter>();
+                Commons.ADDParameter(ref lstParam, "@DeptDoctorId", DbType.Int32, pintReligionId);
+                ldt = mobjDataAcces.GetDataTable("sp_GetDeptVisitingDoctors", lstParam);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return ldt;
+        }
+
         public EntityPatientMaster GetDeptDoctor(int pintCategoryId)
         {
             try
@@ -592,52 +608,13 @@ namespace MainProjectHos.Models.BusinessLayer
                     PatientCategory = "0",
                     IsDelete = false,
                     IPDNo = entPatientMaster.IPDNo,
-                    OPDNo = entPatientMaster.OPDNo
+                    OPDNo = entPatientMaster.OPDNo,
+                    CompanyName = entPatientMaster.CompName,
+                    InsuranceName = entPatientMaster.InsuName
                     //AudiometryFile=entPatientMaster.AudiometryFile,
                     //EndoscopyFile=entPatientMaster.EndoscopyFile
                 };
-                //List<SqlParameter> lstParam = new List<SqlParameter>();
-                //Commons.ADDParameter(ref lstParam, "@PatientCode", DbType.String, entPatientMaster.PatientCode);
-                //Commons.ADDParameter(ref lstParam, "@Initial", DbType.Int32, entPatientMaster.PatientInitial);
-                //Commons.ADDParameter(ref lstParam, "@PatientFirstName", DbType.String, entPatientMaster.PatientFirstName);
-                //Commons.ADDParameter(ref lstParam, "@PatientMiddleName", DbType.String, entPatientMaster.PatientMiddleName);
-                //Commons.ADDParameter(ref lstParam, "@PatientLastName", DbType.String, entPatientMaster.PatientLastName);
-                //Commons.ADDParameter(ref lstParam, "@AdminDate", DbType.DateTime, entPatientMaster.PatientAdmitDate);
-                //Commons.ADDParameter(ref lstParam, "@AdmitTime", DbType.String, entPatientMaster.PatientAdmitTime);
-                //Commons.ADDParameter(ref lstParam, "@PatientType", DbType.String, entPatientMaster.PatientType);
-                //Commons.ADDParameter(ref lstParam, "@Address", DbType.String, entPatientMaster.PatientAddress);
-                //Commons.ADDParameter(ref lstParam, "@ContactNo", DbType.String, entPatientMaster.PatientContactNo);
-                //if (entPatientMaster.BirthDate==null)
-                //{
-                //    Commons.ADDParameter(ref lstParam, "@BirthDate", DbType.DateTime, entPatientMaster.BirthDate);     
-                //}
-                //else
-                //{
-                //    Commons.ADDParameter(ref lstParam, "@BirthDate", DbType.DateTime, DBNull.Value);
-                //}
-                //Commons.ADDParameter(ref lstParam, "@ReferedBy", DbType.String, entPatientMaster.ReferedBy);
-                //Commons.ADDParameter(ref lstParam, "@FloorNo", DbType.Int32, entPatientMaster.FloorNo);
-                //Commons.ADDParameter(ref lstParam, "@WardNo", DbType.Int32, entPatientMaster.WardNo);
-                //Commons.ADDParameter(ref lstParam, "@BedNo", DbType.Int32, entPatientMaster.BedNo);
-                //Commons.ADDParameter(ref lstParam, "@Gender", DbType.String, entPatientMaster.Gender);
-                //Commons.ADDParameter(ref lstParam, "@Age", DbType.Int32, entPatientMaster.Age);
-                //Commons.ADDParameter(ref lstParam, "@Occupation", DbType.Int32, entPatientMaster.Occupation);
-                //Commons.ADDParameter(ref lstParam, "@Religion", DbType.String, entPatientMaster.Religion);
-                //Commons.ADDParameter(ref lstParam, "@Caste", DbType.String, entPatientMaster.Caste);
-                //Commons.ADDParameter(ref lstParam, "@City", DbType.String, entPatientMaster.City);
-                //Commons.ADDParameter(ref lstParam, "@State", DbType.String, entPatientMaster.State);
-                //Commons.ADDParameter(ref lstParam, "@Country", DbType.String, entPatientMaster.Country);
-                //Commons.ADDParameter(ref lstParam, "@CompanyCode", DbType.String, entPatientMaster.CompanyCode);
-                //Commons.ADDParameter(ref lstParam, "@EntryBy", DbType.String, entPatientMaster.EntryBy);
-                //Commons.ADDParameter(ref lstParam, "@IsDischarged", DbType.Boolean, entPatientMaster.IsDischarged);
-                //Commons.ADDParameter(ref lstParam, "@InsuranceCompName", DbType.String, entPatientMaster.InsuranceCompName);
-                //Commons.ADDParameter(ref lstParam, "@IdProof", DbType.Binary, entPatientMaster.IDProof);
-                //Commons.ADDParameter(ref lstParam, "@InsuranceProof", DbType.Binary, entPatientMaster.InsurenaceProof);
-                //Commons.ADDParameter(ref lstParam, "@BloodGroup", DbType.String, entPatientMaster.BloodGroup);
-                //Commons.ADDParameter(ref lstParam, "@CompanyId", DbType.Int32, entPatientMaster.CompanyId);
-                //Commons.ADDParameter(ref lstParam, "@InsuranceCompId", DbType.Int32, entPatientMaster.InsuranceCompID);
-                //Commons.ADDParameter(ref lstParam, "@Dignosys", DbType.String, entPatientMaster.Dignosys);
-                //cnt = mobjDataAcces.ExecuteQuery("sp_InsertPatientMaster", lstParam);
+                
                 objData.tblPatientMasters.InsertOnSubmit(obj);
                 objData.SubmitChanges();
                 cnt++;
@@ -881,6 +858,8 @@ namespace MainProjectHos.Models.BusinessLayer
                     AdmitTime = admit.PatientAdmitTime,
                     CompanyId = admit.CompanyId,
                     InsuranceComId = admit.InsuranceComId,
+                    CompanyName = admit.CompanyName,
+                    InsuranceName = admit.InsuName,
                     IsCompany = admit.IsCompany,
                     IsDelete = false,
                     IsDischarge = false,
@@ -891,6 +870,7 @@ namespace MainProjectHos.Models.BusinessLayer
                     PatientId = admit.PatientId,
                     Dignosys = admit.Dignosys,
                     Age = admit.Age,
+                    Weight = admit.Weight,
                     AgeIn = admit.AgeIn,
                     IPDNo = admit.IPDNo,
                     OPDNo = admit.OPDNo,
@@ -925,13 +905,17 @@ namespace MainProjectHos.Models.BusinessLayer
                     admit.PatientType = entAdmit.PatientType;
                     admit.IsOPD = entAdmit.IsOPD;
                     admit.PatientId = entAdmit.PatientId;
-                    admit.IsInsured = entAdmit.IsInsured;
+                    admit.InsuranceComId = entAdmit.InsuranceComId;
                     admit.Age = entAdmit.Age;
+                    admit.Weight = entAdmit.Weight;
                     admit.AgeIn = entAdmit.AgeIn;
                     admit.IPDNo = entAdmit.IPDNo;
                     admit.OPDNo = entAdmit.OPDNo;
+                    admit.Dignosys = entAdmit.Dignosys;
                     admit.DeptCategory = entAdmit.DeptCategory;
                     admit.DeptDoctorId = entAdmit.DeptDoctorId;
+                    admit.InsuranceName = entAdmit.InsuName;
+                    admit.CompanyName = entAdmit.CompanyName;
                 }
                 objData.SubmitChanges();
                 cnt++;
@@ -1034,7 +1018,11 @@ namespace MainProjectHos.Models.BusinessLayer
                     objPatient.Occupation = entPatientMaster.Occupation;
                     objPatient.DeptCategory = entPatientMaster.DeptCategory;
                     objPatient.DeptDoctorId = entPatientMaster.DeptDoctorId;
-
+                    objPatient.CompanyName = entPatientMaster.CompName;
+                    objPatient.InsuranceName = entPatientMaster.InsuName;
+                    objPatient.CompanyId = entPatientMaster.CompanyId;
+                    objPatient.InsuranceCompanyId = entPatientMaster.InsuranceCompID;
+                    objPatient.InsuranceCompName = entPatientMaster.InsuranceCompName;
                     List<tblPatientAdmitDetail> lst = (from tbl in objData.tblPatientAdmitDetails
                                                        where tbl.IsDelete == false
                                                        && tbl.PatientId == objPatient.PKId
@@ -1050,12 +1038,15 @@ namespace MainProjectHos.Models.BusinessLayer
                             item.AgeIn = entPatientMaster.AgeIn;
                             item.DeptCategory = entPatientMaster.DeptCategory;
                             item.DeptDoctorId = entPatientMaster.DeptDoctorId;
+                            item.CompanyName = entPatientMaster.CompName;
+                            item.InsuranceName = entPatientMaster.InsuName;
                             if (entPatientMaster.CompanyId > 0)
                             {
                                 item.IsCompany = true;
                                 item.CompanyId = entPatientMaster.CompanyId;
+
                             }
-                            if (item.InsuranceComId > 0)
+                            if (entPatientMaster.InsuranceCompID > 0)
                             {
                                 item.IsInsured = true;
                                 item.InsuranceComId = entPatientMaster.InsuranceCompID;
