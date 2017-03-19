@@ -276,6 +276,18 @@
       <SubType>Designer</SubType>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="PathalogyReport\frmBedConsumption.aspx" />
+    <Content Include="PathalogyReport\frmDatewiseCollection.aspx" />
+    <Content Include="PathalogyReport\frmHistoryReport.aspx" />
+    <Content Include="PathalogyReport\frmIPDPatientReport.aspx" />
+    <Content Include="PathalogyReport\frmItemStockReport.aspx" />
+    <Content Include="PathalogyReport\frmOTBedPatientReport.aspx" />
+    <Content Include="PathalogyReport\frmOutstandingReport.aspx" />
+    <Content Include="PathalogyReport\frmPatientLedger.aspx" />
+    <Content Include="PathalogyReport\frmStockDetailReport.aspx" />
+    <Content Include="PathalogyReport\frmSupplierLedger.aspx" />
+    <Content Include="PathalogyReport\frmSupplierOutstandingReport.aspx" />
+    <Content Include="PathalogyReport\frmTDSReport.aspx" />
     <Content Include="PatientStatus\frmBirthCertificate.aspx" />
     <Content Include="PatientStatus\frmDeathCertificate.aspx" />
     <Content Include="PatientStatus\frmMedicalCertificate.aspx" />
@@ -897,6 +909,90 @@
     </Compile>
     <Compile Include="mstStore.Master.designer.cs">
       <DependentUpon>mstStore.Master</DependentUpon>
+    </Compile>
+    <Compile Include="PathalogyReport\frmBedConsumption.aspx.cs">
+      <DependentUpon>frmBedConsumption.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PathalogyReport\frmBedConsumption.aspx.designer.cs">
+      <DependentUpon>frmBedConsumption.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PathalogyReport\frmDatewiseCollection.aspx.cs">
+      <DependentUpon>frmDatewiseCollection.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PathalogyReport\frmDatewiseCollection.aspx.designer.cs">
+      <DependentUpon>frmDatewiseCollection.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PathalogyReport\frmHistoryReport.aspx.cs">
+      <DependentUpon>frmHistoryReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PathalogyReport\frmHistoryReport.aspx.designer.cs">
+      <DependentUpon>frmHistoryReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PathalogyReport\frmIPDPatientReport.aspx.cs">
+      <DependentUpon>frmIPDPatientReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PathalogyReport\frmIPDPatientReport.aspx.designer.cs">
+      <DependentUpon>frmIPDPatientReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PathalogyReport\frmItemStockReport.aspx.cs">
+      <DependentUpon>frmItemStockReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PathalogyReport\frmItemStockReport.aspx.designer.cs">
+      <DependentUpon>frmItemStockReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PathalogyReport\frmOTBedPatientReport.aspx.cs">
+      <DependentUpon>frmOTBedPatientReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PathalogyReport\frmOTBedPatientReport.aspx.designer.cs">
+      <DependentUpon>frmOTBedPatientReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PathalogyReport\frmOutstandingReport.aspx.cs">
+      <DependentUpon>frmOutstandingReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PathalogyReport\frmOutstandingReport.aspx.designer.cs">
+      <DependentUpon>frmOutstandingReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PathalogyReport\frmPatientLedger.aspx.cs">
+      <DependentUpon>frmPatientLedger.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PathalogyReport\frmPatientLedger.aspx.designer.cs">
+      <DependentUpon>frmPatientLedger.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PathalogyReport\frmStockDetailReport.aspx.cs">
+      <DependentUpon>frmStockDetailReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PathalogyReport\frmStockDetailReport.aspx.designer.cs">
+      <DependentUpon>frmStockDetailReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PathalogyReport\frmSupplierLedger.aspx.cs">
+      <DependentUpon>frmSupplierLedger.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PathalogyReport\frmSupplierLedger.aspx.designer.cs">
+      <DependentUpon>frmSupplierLedger.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PathalogyReport\frmSupplierOutstandingReport.aspx.cs">
+      <DependentUpon>frmSupplierOutstandingReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PathalogyReport\frmSupplierOutstandingReport.aspx.designer.cs">
+      <DependentUpon>frmSupplierOutstandingReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PathalogyReport\frmTDSReport.aspx.cs">
+      <DependentUpon>frmTDSReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PathalogyReport\frmTDSReport.aspx.designer.cs">
+      <DependentUpon>frmTDSReport.aspx</DependentUpon>
     </Compile>
     <Compile Include="PatientStatus\frmBirthCertificate.aspx.cs">
       <DependentUpon>frmBirthCertificate.aspx</DependentUpon>

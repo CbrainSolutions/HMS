@@ -2,6 +2,8 @@
 using MainProjectHos.Models.DataModels;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
@@ -315,6 +317,148 @@ namespace MainProjectHos.Models.BusinessLayer
                 throw ex;
             }
         }
+    }
+
+    public class DocumentBLL
+    {
+        clsDataAccess mobjDataAccess = new clsDataAccess();
+
+        public DocumentBLL()
+        {
+            objData = new CriticareHospitalDataContext();
+        }
+
+        public CriticareHospitalDataContext objData { get; set; }
+
+        public int InsertDocument(EntityDocument entDocument)
+        {
+            int cnt = 0;
+            List<SqlParameter> lstParam = new List<SqlParameter>();
+            try
+            {
+                Commons.ADDParameter(ref lstParam, "@DocumentName", DbType.String, entDocument.DocumentNAme);
+                Commons.ADDParameter(ref lstParam, "@FileContent", DbType.Binary, entDocument.File);
+                Commons.ADDParameter(ref lstParam, "@PatientId", DbType.Int32, entDocument.PatientId);
+                Commons.ADDParameter(ref lstParam, "@UploadDate", DbType.DateTime, entDocument.UploadDate);
+                cnt = mobjDataAccess.ExecuteQuery("sp_InsertDocument", lstParam);
+            }
+            catch (Exception ex)
+            {
+                Commons.FileLog("DocumentBLL - InsertDocument(EntityDocument entDocument)", ex);
+            }
+            return cnt;
+        }
+
+        public DataTable GetDocuments()
+        {
+            DataTable ldt = new DataTable();
+            try
+            {
+                ldt = mobjDataAccess.GetDataTable("sp_SelectDocuments");
+            }
+            catch (Exception ex)
+            {
+                Commons.FileLog("ManualQuotationBLL -  GetDocuments()", ex);
+            }
+            return ldt;
+        }
+
+        public DataTable GetDocumentByName(int pintPKId, string DocumentName)
+        {
+            DataTable ldt = new DataTable();
+            List<SqlParameter> lstParam = new List<SqlParameter>();
+            try
+            {
+                Commons.ADDParameter(ref lstParam, "@PKId", DbType.Int32, pintPKId);
+                Commons.ADDParameter(ref lstParam, "@DocumentName", DbType.String, DocumentName);
+                ldt = mobjDataAccess.GetDataTable("sp_DownloadDocuments", lstParam);
+            }
+            catch (Exception ex)
+            {
+                Commons.FileLog("DocumentBLL - GetDocumentByName(int pintPKId,string DocumentName)", ex);
+            }
+            return ldt;
+        }
+
+        public List<STP_PatientwiseDocumentDetailResult> PatientwiseDocDetails(int patientId)
+        {
+            try
+            {
+                return (objData.STP_PatientwiseDocumentDetail(patientId)).ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<EntityDocument> SearchDocumentDetails(string Prefix)
+        {
+            List<EntityDocument> lst = null;
+            try
+            {
+                lst = (from tbl in objData.tblDocuments
+                       join tblp in objData.tblPatientMasters
+                       on tbl.PatientId equals tblp.PKId
+                       where (tblp.PatientFirstName + " " + tblp.PatientMiddleName + " " + tblp.PatientLastName) == Prefix
+                       select new EntityDocument
+                       {
+                           PatientName = tblp.PatientFirstName + " " + tblp.PatientMiddleName + " " + tblp.PatientLastName,
+                           UploadDate = Convert.ToDateTime(tbl.UploadDate),
+                           PKId = tbl.PKId,
+                           DocumentNAme = tbl.DocumentName,
+                           File = (tbl.FileContent).ToArray()
+                       }).ToList();
+                return lst;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public List<EntityDocument> SearchPatient(string Prefix)
+        {
+
+            List<EntityDocument> lst = null;
+            try
+            {
+                lst = (from tbl in GetPatientList()
+                       where (tbl.PatientName.ToUpper().ToString().Contains(Prefix.ToString().ToUpper())
+                       || tbl.DocumentNAme.ToUpper().ToString().Contains(Prefix.ToUpper().ToString()))
+                       select tbl).ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return lst;
+        }
+        public List<EntityDocument> GetPatientList()
+        {
+            List<EntityDocument> ldt = null;
+            try
+            {
+                ldt = (from tbl in objData.tblDocuments
+                       join tblp in objData.tblPatientMasters
+                       on tbl.PatientId equals tblp.PKId
+                       select new EntityDocument
+                       {
+                           PatientName = tblp.PatientFirstName + " " + tblp.PatientMiddleName + " " + tblp.PatientLastName,
+                           UploadDate = Convert.ToDateTime(tbl.UploadDate),
+                           PKId = tbl.PKId,
+                           DocumentNAme = tbl.DocumentName,
+                           File = (tbl.FileContent).ToArray()
+                       }).ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return ldt;
+        }
+
+
     }
 
 }

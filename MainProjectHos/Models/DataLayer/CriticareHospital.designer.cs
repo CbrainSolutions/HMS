@@ -150,9 +150,6 @@ namespace MainProjectHos.Models.DataLayer
     partial void InserttblInitial(tblInitial instance);
     partial void UpdatetblInitial(tblInitial instance);
     partial void DeletetblInitial(tblInitial instance);
-    partial void InserttblInsuranceClaim(tblInsuranceClaim instance);
-    partial void UpdatetblInsuranceClaim(tblInsuranceClaim instance);
-    partial void DeletetblInsuranceClaim(tblInsuranceClaim instance);
     partial void InserttblInsuranceClaimDetail(tblInsuranceClaimDetail instance);
     partial void UpdatetblInsuranceClaimDetail(tblInsuranceClaimDetail instance);
     partial void DeletetblInsuranceClaimDetail(tblInsuranceClaimDetail instance);
@@ -336,6 +333,9 @@ namespace MainProjectHos.Models.DataLayer
     partial void InserttblDischarge(tblDischarge instance);
     partial void UpdatetblDischarge(tblDischarge instance);
     partial void DeletetblDischarge(tblDischarge instance);
+    partial void InserttblInsuranceClaim(tblInsuranceClaim instance);
+    partial void UpdatetblInsuranceClaim(tblInsuranceClaim instance);
+    partial void DeletetblInsuranceClaim(tblInsuranceClaim instance);
     #endregion
 		
 		public CriticareHospitalDataContext() : 
@@ -693,14 +693,6 @@ namespace MainProjectHos.Models.DataLayer
 			get
 			{
 				return this.GetTable<tblInitial>();
-			}
-		}
-		
-		public System.Data.Linq.Table<tblInsuranceClaim> tblInsuranceClaims
-		{
-			get
-			{
-				return this.GetTable<tblInsuranceClaim>();
 			}
 		}
 		
@@ -1197,6 +1189,14 @@ namespace MainProjectHos.Models.DataLayer
 			get
 			{
 				return this.GetTable<tblDischarge>();
+			}
+		}
+		
+		public System.Data.Linq.Table<tblInsuranceClaim> tblInsuranceClaims
+		{
+			get
+			{
+				return this.GetTable<tblInsuranceClaim>();
 			}
 		}
 		
@@ -4178,12 +4178,6 @@ namespace MainProjectHos.Models.DataLayer
 			return ((ISingleResult<STP_SupplierOutstandingReportResult>)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.STP_TdsReport", IsComposable=true)]
-		public object STP_TdsReport([global::System.Data.Linq.Mapping.ParameterAttribute(Name="Fromdate", DbType="DateTime")] System.Nullable<System.DateTime> fromdate, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Todate", DbType="DateTime")] System.Nullable<System.DateTime> todate)
-		{
-			return ((object)(this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), fromdate, todate).ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.STP_WardwisePatientDetails")]
 		public ISingleResult<STP_WardwisePatientDetailsResult> STP_WardwisePatientDetails([global::System.Data.Linq.Mapping.ParameterAttribute(Name="FromDate", DbType="DateTime")] System.Nullable<System.DateTime> fromDate, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ToDate", DbType="DateTime")] System.Nullable<System.DateTime> toDate, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(250)")] string wardCategory)
 		{
@@ -4196,6 +4190,13 @@ namespace MainProjectHos.Models.DataLayer
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), pO_ID);
 			return ((ISingleResult<STP_EditIssueMaterialResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.STP_TdsReport")]
+		public ISingleResult<STP_TdsReportResult> STP_TdsReport([global::System.Data.Linq.Mapping.ParameterAttribute(Name="Fromdate", DbType="DateTime")] System.Nullable<System.DateTime> fromdate, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Todate", DbType="DateTime")] System.Nullable<System.DateTime> todate)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), fromdate, todate);
+			return ((ISingleResult<STP_TdsReportResult>)(result.ReturnValue));
 		}
 	}
 	
@@ -14695,404 +14696,6 @@ namespace MainProjectHos.Models.DataLayer
 					this._ChangeDate = value;
 					this.SendPropertyChanged("ChangeDate");
 					this.OnChangeDateChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.tblInsuranceClaim")]
-	public partial class tblInsuranceClaim : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ClaimId;
-		
-		private int _AdmitId;
-		
-		private int _CompanyId;
-		
-		private System.DateTime _ClaimDate;
-		
-		private System.Nullable<System.DateTime> _ApprovedDate;
-		
-		private System.Nullable<decimal> _ApprovedAmount;
-		
-		private decimal _Total;
-		
-		private System.Nullable<decimal> _ReceivedAmt;
-		
-		private bool _IsApproved;
-		
-		private bool _IsDelete;
-		
-		private System.Nullable<int> _TDS;
-		
-		private System.Nullable<decimal> _TDSAmt;
-		
-		private System.Nullable<decimal> _BadDebts;
-		
-		private System.Nullable<decimal> _CoPayment;
-		
-		private string _BankRefNo;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnClaimIdChanging(int value);
-    partial void OnClaimIdChanged();
-    partial void OnAdmitIdChanging(int value);
-    partial void OnAdmitIdChanged();
-    partial void OnCompanyIdChanging(int value);
-    partial void OnCompanyIdChanged();
-    partial void OnClaimDateChanging(System.DateTime value);
-    partial void OnClaimDateChanged();
-    partial void OnApprovedDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnApprovedDateChanged();
-    partial void OnApprovedAmountChanging(System.Nullable<decimal> value);
-    partial void OnApprovedAmountChanged();
-    partial void OnTotalChanging(decimal value);
-    partial void OnTotalChanged();
-    partial void OnReceivedAmtChanging(System.Nullable<decimal> value);
-    partial void OnReceivedAmtChanged();
-    partial void OnIsApprovedChanging(bool value);
-    partial void OnIsApprovedChanged();
-    partial void OnIsDeleteChanging(bool value);
-    partial void OnIsDeleteChanged();
-    partial void OnTDSChanging(System.Nullable<int> value);
-    partial void OnTDSChanged();
-    partial void OnTDSAmtChanging(System.Nullable<decimal> value);
-    partial void OnTDSAmtChanged();
-    partial void OnBadDebtsChanging(System.Nullable<decimal> value);
-    partial void OnBadDebtsChanged();
-    partial void OnCoPaymentChanging(System.Nullable<decimal> value);
-    partial void OnCoPaymentChanged();
-    partial void OnBankRefNoChanging(string value);
-    partial void OnBankRefNoChanged();
-    #endregion
-		
-		public tblInsuranceClaim()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ClaimId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int ClaimId
-		{
-			get
-			{
-				return this._ClaimId;
-			}
-			set
-			{
-				if ((this._ClaimId != value))
-				{
-					this.OnClaimIdChanging(value);
-					this.SendPropertyChanging();
-					this._ClaimId = value;
-					this.SendPropertyChanged("ClaimId");
-					this.OnClaimIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AdmitId", DbType="Int NOT NULL")]
-		public int AdmitId
-		{
-			get
-			{
-				return this._AdmitId;
-			}
-			set
-			{
-				if ((this._AdmitId != value))
-				{
-					this.OnAdmitIdChanging(value);
-					this.SendPropertyChanging();
-					this._AdmitId = value;
-					this.SendPropertyChanged("AdmitId");
-					this.OnAdmitIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CompanyId", DbType="Int NOT NULL")]
-		public int CompanyId
-		{
-			get
-			{
-				return this._CompanyId;
-			}
-			set
-			{
-				if ((this._CompanyId != value))
-				{
-					this.OnCompanyIdChanging(value);
-					this.SendPropertyChanging();
-					this._CompanyId = value;
-					this.SendPropertyChanged("CompanyId");
-					this.OnCompanyIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ClaimDate", DbType="DateTime NOT NULL")]
-		public System.DateTime ClaimDate
-		{
-			get
-			{
-				return this._ClaimDate;
-			}
-			set
-			{
-				if ((this._ClaimDate != value))
-				{
-					this.OnClaimDateChanging(value);
-					this.SendPropertyChanging();
-					this._ClaimDate = value;
-					this.SendPropertyChanged("ClaimDate");
-					this.OnClaimDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApprovedDate", DbType="DateTime")]
-		public System.Nullable<System.DateTime> ApprovedDate
-		{
-			get
-			{
-				return this._ApprovedDate;
-			}
-			set
-			{
-				if ((this._ApprovedDate != value))
-				{
-					this.OnApprovedDateChanging(value);
-					this.SendPropertyChanging();
-					this._ApprovedDate = value;
-					this.SendPropertyChanged("ApprovedDate");
-					this.OnApprovedDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApprovedAmount", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> ApprovedAmount
-		{
-			get
-			{
-				return this._ApprovedAmount;
-			}
-			set
-			{
-				if ((this._ApprovedAmount != value))
-				{
-					this.OnApprovedAmountChanging(value);
-					this.SendPropertyChanging();
-					this._ApprovedAmount = value;
-					this.SendPropertyChanged("ApprovedAmount");
-					this.OnApprovedAmountChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Total", DbType="Decimal(18,2) NOT NULL")]
-		public decimal Total
-		{
-			get
-			{
-				return this._Total;
-			}
-			set
-			{
-				if ((this._Total != value))
-				{
-					this.OnTotalChanging(value);
-					this.SendPropertyChanging();
-					this._Total = value;
-					this.SendPropertyChanged("Total");
-					this.OnTotalChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReceivedAmt", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> ReceivedAmt
-		{
-			get
-			{
-				return this._ReceivedAmt;
-			}
-			set
-			{
-				if ((this._ReceivedAmt != value))
-				{
-					this.OnReceivedAmtChanging(value);
-					this.SendPropertyChanging();
-					this._ReceivedAmt = value;
-					this.SendPropertyChanged("ReceivedAmt");
-					this.OnReceivedAmtChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsApproved", DbType="Bit NOT NULL")]
-		public bool IsApproved
-		{
-			get
-			{
-				return this._IsApproved;
-			}
-			set
-			{
-				if ((this._IsApproved != value))
-				{
-					this.OnIsApprovedChanging(value);
-					this.SendPropertyChanging();
-					this._IsApproved = value;
-					this.SendPropertyChanged("IsApproved");
-					this.OnIsApprovedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsDelete", DbType="Bit NOT NULL")]
-		public bool IsDelete
-		{
-			get
-			{
-				return this._IsDelete;
-			}
-			set
-			{
-				if ((this._IsDelete != value))
-				{
-					this.OnIsDeleteChanging(value);
-					this.SendPropertyChanging();
-					this._IsDelete = value;
-					this.SendPropertyChanged("IsDelete");
-					this.OnIsDeleteChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TDS", DbType="Int")]
-		public System.Nullable<int> TDS
-		{
-			get
-			{
-				return this._TDS;
-			}
-			set
-			{
-				if ((this._TDS != value))
-				{
-					this.OnTDSChanging(value);
-					this.SendPropertyChanging();
-					this._TDS = value;
-					this.SendPropertyChanged("TDS");
-					this.OnTDSChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TDSAmt", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> TDSAmt
-		{
-			get
-			{
-				return this._TDSAmt;
-			}
-			set
-			{
-				if ((this._TDSAmt != value))
-				{
-					this.OnTDSAmtChanging(value);
-					this.SendPropertyChanging();
-					this._TDSAmt = value;
-					this.SendPropertyChanged("TDSAmt");
-					this.OnTDSAmtChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BadDebts", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> BadDebts
-		{
-			get
-			{
-				return this._BadDebts;
-			}
-			set
-			{
-				if ((this._BadDebts != value))
-				{
-					this.OnBadDebtsChanging(value);
-					this.SendPropertyChanging();
-					this._BadDebts = value;
-					this.SendPropertyChanged("BadDebts");
-					this.OnBadDebtsChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CoPayment", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> CoPayment
-		{
-			get
-			{
-				return this._CoPayment;
-			}
-			set
-			{
-				if ((this._CoPayment != value))
-				{
-					this.OnCoPaymentChanging(value);
-					this.SendPropertyChanging();
-					this._CoPayment = value;
-					this.SendPropertyChanged("CoPayment");
-					this.OnCoPaymentChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BankRefNo", DbType="NVarChar(250)")]
-		public string BankRefNo
-		{
-			get
-			{
-				return this._BankRefNo;
-			}
-			set
-			{
-				if ((this._BankRefNo != value))
-				{
-					this.OnBankRefNoChanging(value);
-					this.SendPropertyChanging();
-					this._BankRefNo = value;
-					this.SendPropertyChanged("BankRefNo");
-					this.OnBankRefNoChanged();
 				}
 			}
 		}
@@ -32600,6 +32203,428 @@ namespace MainProjectHos.Models.DataLayer
 					this._USG = value;
 					this.SendPropertyChanged("USG");
 					this.OnUSGChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.tblInsuranceClaim")]
+	public partial class tblInsuranceClaim : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ClaimId;
+		
+		private int _AdmitId;
+		
+		private int _CompanyId;
+		
+		private System.DateTime _ClaimDate;
+		
+		private System.Nullable<System.DateTime> _ApprovedDate;
+		
+		private System.Nullable<decimal> _ApprovedAmount;
+		
+		private decimal _Total;
+		
+		private System.Nullable<decimal> _ReceivedAmt;
+		
+		private bool _IsApproved;
+		
+		private bool _IsDelete;
+		
+		private System.Nullable<int> _TDS;
+		
+		private System.Nullable<decimal> _TDSAmt;
+		
+		private System.Nullable<decimal> _BadDebts;
+		
+		private System.Nullable<decimal> _CoPayment;
+		
+		private string _BankRefNo;
+		
+		private System.Nullable<decimal> _Discount;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnClaimIdChanging(int value);
+    partial void OnClaimIdChanged();
+    partial void OnAdmitIdChanging(int value);
+    partial void OnAdmitIdChanged();
+    partial void OnCompanyIdChanging(int value);
+    partial void OnCompanyIdChanged();
+    partial void OnClaimDateChanging(System.DateTime value);
+    partial void OnClaimDateChanged();
+    partial void OnApprovedDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnApprovedDateChanged();
+    partial void OnApprovedAmountChanging(System.Nullable<decimal> value);
+    partial void OnApprovedAmountChanged();
+    partial void OnTotalChanging(decimal value);
+    partial void OnTotalChanged();
+    partial void OnReceivedAmtChanging(System.Nullable<decimal> value);
+    partial void OnReceivedAmtChanged();
+    partial void OnIsApprovedChanging(bool value);
+    partial void OnIsApprovedChanged();
+    partial void OnIsDeleteChanging(bool value);
+    partial void OnIsDeleteChanged();
+    partial void OnTDSChanging(System.Nullable<int> value);
+    partial void OnTDSChanged();
+    partial void OnTDSAmtChanging(System.Nullable<decimal> value);
+    partial void OnTDSAmtChanged();
+    partial void OnBadDebtsChanging(System.Nullable<decimal> value);
+    partial void OnBadDebtsChanged();
+    partial void OnCoPaymentChanging(System.Nullable<decimal> value);
+    partial void OnCoPaymentChanged();
+    partial void OnBankRefNoChanging(string value);
+    partial void OnBankRefNoChanged();
+    partial void OnDiscountChanging(System.Nullable<decimal> value);
+    partial void OnDiscountChanged();
+    #endregion
+		
+		public tblInsuranceClaim()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ClaimId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ClaimId
+		{
+			get
+			{
+				return this._ClaimId;
+			}
+			set
+			{
+				if ((this._ClaimId != value))
+				{
+					this.OnClaimIdChanging(value);
+					this.SendPropertyChanging();
+					this._ClaimId = value;
+					this.SendPropertyChanged("ClaimId");
+					this.OnClaimIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AdmitId", DbType="Int NOT NULL")]
+		public int AdmitId
+		{
+			get
+			{
+				return this._AdmitId;
+			}
+			set
+			{
+				if ((this._AdmitId != value))
+				{
+					this.OnAdmitIdChanging(value);
+					this.SendPropertyChanging();
+					this._AdmitId = value;
+					this.SendPropertyChanged("AdmitId");
+					this.OnAdmitIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CompanyId", DbType="Int NOT NULL")]
+		public int CompanyId
+		{
+			get
+			{
+				return this._CompanyId;
+			}
+			set
+			{
+				if ((this._CompanyId != value))
+				{
+					this.OnCompanyIdChanging(value);
+					this.SendPropertyChanging();
+					this._CompanyId = value;
+					this.SendPropertyChanged("CompanyId");
+					this.OnCompanyIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ClaimDate", DbType="DateTime NOT NULL")]
+		public System.DateTime ClaimDate
+		{
+			get
+			{
+				return this._ClaimDate;
+			}
+			set
+			{
+				if ((this._ClaimDate != value))
+				{
+					this.OnClaimDateChanging(value);
+					this.SendPropertyChanging();
+					this._ClaimDate = value;
+					this.SendPropertyChanged("ClaimDate");
+					this.OnClaimDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApprovedDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> ApprovedDate
+		{
+			get
+			{
+				return this._ApprovedDate;
+			}
+			set
+			{
+				if ((this._ApprovedDate != value))
+				{
+					this.OnApprovedDateChanging(value);
+					this.SendPropertyChanging();
+					this._ApprovedDate = value;
+					this.SendPropertyChanged("ApprovedDate");
+					this.OnApprovedDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApprovedAmount", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> ApprovedAmount
+		{
+			get
+			{
+				return this._ApprovedAmount;
+			}
+			set
+			{
+				if ((this._ApprovedAmount != value))
+				{
+					this.OnApprovedAmountChanging(value);
+					this.SendPropertyChanging();
+					this._ApprovedAmount = value;
+					this.SendPropertyChanged("ApprovedAmount");
+					this.OnApprovedAmountChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Total", DbType="Decimal(18,2) NOT NULL")]
+		public decimal Total
+		{
+			get
+			{
+				return this._Total;
+			}
+			set
+			{
+				if ((this._Total != value))
+				{
+					this.OnTotalChanging(value);
+					this.SendPropertyChanging();
+					this._Total = value;
+					this.SendPropertyChanged("Total");
+					this.OnTotalChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReceivedAmt", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> ReceivedAmt
+		{
+			get
+			{
+				return this._ReceivedAmt;
+			}
+			set
+			{
+				if ((this._ReceivedAmt != value))
+				{
+					this.OnReceivedAmtChanging(value);
+					this.SendPropertyChanging();
+					this._ReceivedAmt = value;
+					this.SendPropertyChanged("ReceivedAmt");
+					this.OnReceivedAmtChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsApproved", DbType="Bit NOT NULL")]
+		public bool IsApproved
+		{
+			get
+			{
+				return this._IsApproved;
+			}
+			set
+			{
+				if ((this._IsApproved != value))
+				{
+					this.OnIsApprovedChanging(value);
+					this.SendPropertyChanging();
+					this._IsApproved = value;
+					this.SendPropertyChanged("IsApproved");
+					this.OnIsApprovedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsDelete", DbType="Bit NOT NULL")]
+		public bool IsDelete
+		{
+			get
+			{
+				return this._IsDelete;
+			}
+			set
+			{
+				if ((this._IsDelete != value))
+				{
+					this.OnIsDeleteChanging(value);
+					this.SendPropertyChanging();
+					this._IsDelete = value;
+					this.SendPropertyChanged("IsDelete");
+					this.OnIsDeleteChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TDS", DbType="Int")]
+		public System.Nullable<int> TDS
+		{
+			get
+			{
+				return this._TDS;
+			}
+			set
+			{
+				if ((this._TDS != value))
+				{
+					this.OnTDSChanging(value);
+					this.SendPropertyChanging();
+					this._TDS = value;
+					this.SendPropertyChanged("TDS");
+					this.OnTDSChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TDSAmt", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> TDSAmt
+		{
+			get
+			{
+				return this._TDSAmt;
+			}
+			set
+			{
+				if ((this._TDSAmt != value))
+				{
+					this.OnTDSAmtChanging(value);
+					this.SendPropertyChanging();
+					this._TDSAmt = value;
+					this.SendPropertyChanged("TDSAmt");
+					this.OnTDSAmtChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BadDebts", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> BadDebts
+		{
+			get
+			{
+				return this._BadDebts;
+			}
+			set
+			{
+				if ((this._BadDebts != value))
+				{
+					this.OnBadDebtsChanging(value);
+					this.SendPropertyChanging();
+					this._BadDebts = value;
+					this.SendPropertyChanged("BadDebts");
+					this.OnBadDebtsChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CoPayment", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> CoPayment
+		{
+			get
+			{
+				return this._CoPayment;
+			}
+			set
+			{
+				if ((this._CoPayment != value))
+				{
+					this.OnCoPaymentChanging(value);
+					this.SendPropertyChanging();
+					this._CoPayment = value;
+					this.SendPropertyChanged("CoPayment");
+					this.OnCoPaymentChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BankRefNo", DbType="NVarChar(250)")]
+		public string BankRefNo
+		{
+			get
+			{
+				return this._BankRefNo;
+			}
+			set
+			{
+				if ((this._BankRefNo != value))
+				{
+					this.OnBankRefNoChanging(value);
+					this.SendPropertyChanging();
+					this._BankRefNo = value;
+					this.SendPropertyChanged("BankRefNo");
+					this.OnBankRefNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Discount", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> Discount
+		{
+			get
+			{
+				return this._Discount;
+			}
+			set
+			{
+				if ((this._Discount != value))
+				{
+					this.OnDiscountChanging(value);
+					this.SendPropertyChanging();
+					this._Discount = value;
+					this.SendPropertyChanged("Discount");
+					this.OnDiscountChanged();
 				}
 			}
 		}
@@ -67390,6 +67415,140 @@ namespace MainProjectHos.Models.DataLayer
 				if ((this._ExpiryDate != value))
 				{
 					this._ExpiryDate = value;
+				}
+			}
+		}
+	}
+	
+	public partial class STP_TdsReportResult
+	{
+		
+		private System.Nullable<System.DateTime> _ApprovedDate;
+		
+		private System.Nullable<decimal> _ApprovedAmount;
+		
+		private decimal _Total;
+		
+		private System.Nullable<int> _TDS;
+		
+		private System.Nullable<decimal> _Discount;
+		
+		private string _CompanyName;
+		
+		private string _FullName;
+		
+		public STP_TdsReportResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApprovedDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> ApprovedDate
+		{
+			get
+			{
+				return this._ApprovedDate;
+			}
+			set
+			{
+				if ((this._ApprovedDate != value))
+				{
+					this._ApprovedDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApprovedAmount", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> ApprovedAmount
+		{
+			get
+			{
+				return this._ApprovedAmount;
+			}
+			set
+			{
+				if ((this._ApprovedAmount != value))
+				{
+					this._ApprovedAmount = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Total", DbType="Decimal(18,2) NOT NULL")]
+		public decimal Total
+		{
+			get
+			{
+				return this._Total;
+			}
+			set
+			{
+				if ((this._Total != value))
+				{
+					this._Total = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TDS", DbType="Int")]
+		public System.Nullable<int> TDS
+		{
+			get
+			{
+				return this._TDS;
+			}
+			set
+			{
+				if ((this._TDS != value))
+				{
+					this._TDS = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Discount", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> Discount
+		{
+			get
+			{
+				return this._Discount;
+			}
+			set
+			{
+				if ((this._Discount != value))
+				{
+					this._Discount = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CompanyName", DbType="NVarChar(50)")]
+		public string CompanyName
+		{
+			get
+			{
+				return this._CompanyName;
+			}
+			set
+			{
+				if ((this._CompanyName != value))
+				{
+					this._CompanyName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FullName", DbType="NVarChar(152)")]
+		public string FullName
+		{
+			get
+			{
+				return this._FullName;
+			}
+			set
+			{
+				if ((this._FullName != value))
+				{
+					this._FullName = value;
 				}
 			}
 		}

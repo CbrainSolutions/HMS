@@ -19,17 +19,17 @@ namespace MainProjectHos.Models.BusinessLayer
         }
         public CriticareHospitalDataContext objData { get; set; }
 
-        //public List<STP_TdsReportResult> SearchTds(DateTime fromdate, DateTime todate)
-        //{
-        //    try
-        //    {
-        //        return (objData.STP_TdsReport(fromdate, todate)).ToList();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw ex;
-        //    }
-        //}
+        public List<STP_TdsReportResult> SearchTds(DateTime fromdate, DateTime todate)
+        {
+            try
+            {
+                return (objData.STP_TdsReport(fromdate, todate)).ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         public List<STP_DatewisInsuranceClaimReportResult> SearchDatewiseInsurance(DateTime fromdate, DateTime todate)
         {

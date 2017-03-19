@@ -539,25 +539,6 @@
       <Column Name="ChangeDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.tblInsuranceClaim" Member="tblInsuranceClaims">
-    <Type Name="tblInsuranceClaim">
-      <Column Name="ClaimId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="AdmitId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="CompanyId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="ClaimDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="ApprovedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="ApprovedAmount" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="Total" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="ReceivedAmt" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="IsApproved" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="IsDelete" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="TDS" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="TDSAmt" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="BadDebts" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="CoPayment" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="BankRefNo" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.tblInsuranceClaimDetails" Member="tblInsuranceClaimDetails">
     <Type Name="tblInsuranceClaimDetail">
       <Column Name="ClaimDetailId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -1435,6 +1416,26 @@
       <Column Name="TreatmentOnDischarge" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
       <Column Name="OperativeNotes" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
       <Column Name="USG" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblInsuranceClaim" Member="tblInsuranceClaims">
+    <Type Name="tblInsuranceClaim">
+      <Column Name="ClaimId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="AdmitId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CompanyId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ClaimDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="ApprovedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ApprovedAmount" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="Total" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="ReceivedAmt" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="IsApproved" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsDelete" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="TDS" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TDSAmt" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="BadDebts" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="CoPayment" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="BankRefNo" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="Discount" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
     </Type>
   </Table>
   <Function Name="dbo.GetALLCategories" Method="GetALLCategories">
@@ -5602,11 +5603,6 @@
       <Column Name="SupplierCode" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
     </ElementType>
   </Function>
-  <Function Name="dbo.STP_TdsReport" Method="STP_TdsReport" IsComposable="true">
-    <Parameter Name="Fromdate" Parameter="fromdate" Type="System.DateTime" DbType="DateTime" />
-    <Parameter Name="Todate" Parameter="todate" Type="System.DateTime" DbType="DateTime" />
-    <Return Type="object" />
-  </Function>
   <Function Name="dbo.STP_WardwisePatientDetails" Method="STP_WardwisePatientDetails">
     <Parameter Name="FromDate" Parameter="fromDate" Type="System.DateTime" DbType="DateTime" />
     <Parameter Name="ToDate" Parameter="toDate" Type="System.DateTime" DbType="DateTime" />
@@ -5635,6 +5631,19 @@
       <Column Name="SR_No" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="BatchNo" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="ExpiryDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.STP_TdsReport" Method="STP_TdsReport">
+    <Parameter Name="Fromdate" Parameter="fromdate" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="Todate" Parameter="todate" Type="System.DateTime" DbType="DateTime" />
+    <ElementType Name="STP_TdsReportResult">
+      <Column Name="ApprovedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ApprovedAmount" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="Total" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="TDS" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Discount" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="CompanyName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="FullName" Type="System.String" DbType="NVarChar(152)" CanBeNull="true" />
     </ElementType>
   </Function>
 </Database>
