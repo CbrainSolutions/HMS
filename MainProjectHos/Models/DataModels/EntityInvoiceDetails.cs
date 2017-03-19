@@ -77,5 +77,7 @@ namespace MainProjectHos.Models.DataModels
 
         public bool IsDelete { get; set; }
         public string PatientType { get; internal set; }
+        public string Remarks { get; internal set; }
+        public string BedNo { get; internal set; }
     }
 }

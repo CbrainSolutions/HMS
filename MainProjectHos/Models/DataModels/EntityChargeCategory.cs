@@ -136,5 +136,8 @@ namespace MainProjectHos.Models.DataModels
                 }
             }
         }
+
+        public bool IsNursing { get; internal set; }
+        public bool IsRMO { get; internal set; }
     }
 }

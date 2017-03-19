@@ -130,7 +130,7 @@ namespace MainProjectHos.Models.BusinessLayer
                                               && tbl.DischargeDate == null
                                               && tblC.IsOT == false
                                               && tblC.IsICU == false
-                                              && tbl.ShiftDate == null
+                                              //&& tbl.ShiftDate==null
                                               orderby tbl.BedAllocId ascending
                                               select new EntityPatientInvoice { BedAllocId = tbl.BedAllocId, Amount = tblC.Rate, AllocDate = tbl.AllocationDate.Value, Description = tblbed.BedNo }).ToList();
             return lst;
@@ -165,6 +165,27 @@ namespace MainProjectHos.Models.BusinessLayer
                                          tbl.IsDischarge == false
                                         select new EntityPatientMaster { PatientId = tbl.AdmitId, PatientType = tbl.IsIPD.Value ? "IPD" : "OPD" }).SingleOrDefault();
             return cate;
+        }
+
+        public EntityPatientInvoice GetWardName(int PatID)
+        {
+            EntityPatientInvoice lst = (from tbl in objData.tblBedAllocationToPatients
+                                        join tblbed in objData.tblBedMasters
+                                        on tbl.BedId equals tblbed.BedId
+                                        join tblR in objData.tblRoomMasters
+                                        on tbl.RoomId equals tblR.RoomId
+                                        join tblC in objData.tblRoomCategories
+                                        on tblR.CategoryId equals tblC.PKId
+                                        join tblP in objData.tblPatientAdmitDetails
+                                        on tbl.PatientId equals tblP.AdmitId
+                                        where tbl.PatientId.Equals(PatID)
+                                        && tbl.DischargeDate == null
+                                        && tblC.IsOT == false
+                                        && tblC.IsICU == false
+                                        && tbl.ShiftDate == null
+                                        orderby tbl.BedAllocId ascending
+                                        select new EntityPatientInvoice { Description = tblC.CategoryDesc }).FirstOrDefault();
+            return lst;
         }
 
         public EntityPatientInvoice GetChargesForCate(int charge)
@@ -254,6 +275,7 @@ namespace MainProjectHos.Models.BusinessLayer
                         Amount = entInvoiceDetails.Amount,
                         NetAmount = entInvoice.NetAmount,
                         ChargePerDay = entInvoiceDetails.PerDayCharge,
+                        Remarks = entInvoiceDetails.Remarks,
                         NoOfDays = entInvoiceDetails.NoOfDays,
                         Quantity = entInvoiceDetails.Quantity,
                         IsDelete = false
@@ -268,55 +290,61 @@ namespace MainProjectHos.Models.BusinessLayer
                     }
                 }
                 //int i = new BedStatusBLL().DischargePatient(entInvoiceDetails.PatientID, entInvoice.BillDate);
-                int TransactionId = GetTransactionId();
-                if (IsCash)
+                if (entInvoice.BillType != "Estimated")
                 {
-                    tblCustomerTransaction objDebit = new tblCustomerTransaction()
+                    int TransactionId = GetTransactionId();
+                    if (IsCash)
                     {
-                        TransactionId = TransactionId,
-                        IsCash = true,
-                        TransactionDocNo = BillNo,
-                        TransactionType = "Invoice",
-                        BillAmount = entInvoice.NetAmount,
-                        PayAmount = entInvoice.NetAmount,
-                        PatientId = entInvoice.PatientId,
-                        IsDelete = false,
-                        ReceiptDate = entInvoice.BillDate,
-                    };
-                    objData.tblCustomerTransactions.InsertOnSubmit(objDebit);
-                    //objData.SubmitChanges();
-                    //tblCustomerTransaction objCrReceipt = new tblCustomerTransaction()
-                    //{
-                    //    TransactionId = TransactionId,
-                    //    IsCash = true,
-                    //    TransactionDocNo = BillNo,
-                    //    TransactionType = "Invoice",
-                    //    PayAmount = entInvoice.NetAmount,
-                    //    BillAmount=0,
-                    //    PatientId = entInvoice.PatientId,
-                    //    IsDelete = false,
-                    //    ReceiptDate = entInvoice.BillDate,
-                    //};
-                    //objData.tblCustomerTransactions.InsertOnSubmit(objCrReceipt);
-                    //objData.SubmitChanges();
-                }
-                else
-                {
-                    tblCustomerTransaction objDebit = new tblCustomerTransaction()
+                        tblCustomerTransaction objDebit = new tblCustomerTransaction()
+                        {
+                            TransactionId = TransactionId,
+                            IsCash = true,
+                            TransactionDocNo = BillNo,
+                            TransactionType = "Invoice",
+                            BillAmount = entInvoice.NetAmount,
+                            PayAmount = entInvoice.NetAmount,
+                            Discount = entInvoice.FixedDiscount,
+                            PatientId = entInvoice.PatientId,
+                            PreparedByName = entInvoice.PreparedByName,
+                            IsDelete = false,
+                            ReceiptDate = entInvoice.BillDate,
+                        };
+                        objData.tblCustomerTransactions.InsertOnSubmit(objDebit);
+                        //objData.SubmitChanges();
+                        //tblCustomerTransaction objCrReceipt = new tblCustomerTransaction()
+                        //{
+                        //    TransactionId = TransactionId,
+                        //    IsCash = true,
+                        //    TransactionDocNo = BillNo,
+                        //    TransactionType = "Invoice",
+                        //    PayAmount = entInvoice.NetAmount,
+                        //    BillAmount=0,
+                        //    PatientId = entInvoice.PatientId,
+                        //    IsDelete = false,
+                        //    ReceiptDate = entInvoice.BillDate,
+                        //};
+                        //objData.tblCustomerTransactions.InsertOnSubmit(objCrReceipt);
+                        //objData.SubmitChanges();
+                    }
+                    else
                     {
-                        TransactionId = TransactionId,
-                        IsCash = false,
-                        TransactionDocNo = BillNo,
-                        TransactionType = "Invoice",
-                        BillAmount = entInvoice.NetAmount,
-                        PatientId = entInvoice.PatientId,
-                        IsDelete = false,
-                        ReceiptDate = entInvoice.BillDate,
-                    };
-                    objData.tblCustomerTransactions.InsertOnSubmit(objDebit);
-                    //objData.SubmitChanges();
+                        tblCustomerTransaction objDebit = new tblCustomerTransaction()
+                        {
+                            TransactionId = TransactionId,
+                            IsCash = false,
+                            TransactionDocNo = BillNo,
+                            TransactionType = "Invoice",
+                            BillAmount = entInvoice.NetAmount,
+                            Discount = entInvoice.FixedDiscount,
+                            PatientId = entInvoice.PatientId,
+                            PreparedByName = entInvoice.PreparedByName,
+                            IsDelete = false,
+                            ReceiptDate = entInvoice.BillDate,
+                        };
+                        objData.tblCustomerTransactions.InsertOnSubmit(objDebit);
+                        //objData.SubmitChanges();
+                    }
                 }
-
 
                 tblPatientAdmitDetail admit = (from tbl in objData.tblPatientAdmitDetails
                                                where tbl.IsDelete == false
@@ -392,11 +420,13 @@ namespace MainProjectHos.Models.BusinessLayer
                            //Vat = Convert.ToDecimal(tbl.Vat),
                            //Service = Convert.ToDecimal(tbl.Service),
                            NetAmount = Convert.ToDecimal(tbl.NetAmount),
+                           BedNo = tbl.BedNo,
                            ChargesName = tbl.ChargesName,
                            OtherId = Convert.ToInt32(tbl.OtherChargesId),
                            OtherChargesId = Convert.ToInt32(tbl.OtherChargesId),
                            Quantity = Convert.ToInt32(tbl.Quantity),
                            NoOfDays = Convert.ToInt32(tbl.NoOfDays),
+                           Remarks = Convert.ToString(tbl.Remarks),
                            PerDayCharge = Convert.ToDecimal(tbl.ChargePerDay),
                            IsDelete = false,
                            BedAllocId = Convert.ToInt32(tbl.BedAllocId),
@@ -595,7 +625,7 @@ namespace MainProjectHos.Models.BusinessLayer
             EntityPatientInvoice entIn = new EntityPatientInvoice();
 
             entIn = (from tbl in objData.tblPatientInvoices
-                     where tbl.PatientId.Equals(Patient_ID)
+                     where tbl.PatientId.Equals(Patient_ID) && tbl.BillType != "Estimated"
                      select new EntityPatientInvoice { BillNo = tbl.BillNo }).FirstOrDefault();
 
             if (entIn != null)
@@ -627,47 +657,121 @@ namespace MainProjectHos.Models.BusinessLayer
                     objTest.ReceivedAmount = entInvoice.ReceivedAmount;
                     objTest.RefundAmount = entInvoice.RefundAmount;
                     objTest.FixedDiscount = entInvoice.FixedDiscount;
+                    objTest.PreparedByName = entInvoice.PreparedByName;
                     //objTest.Service = entInvoice.Service;
                     //objTest.Vat = entInvoice.Vat;
-                    List<tblCustomerTransaction> objCust = (from tbl in objData.tblCustomerTransactions
-                                                            where tbl.IsDelete == false
-                                                            && tbl.TransactionDocNo == entInvoice.BillNo
-                                                            && tbl.TransactionType == "Invoice"
-                                                            select tbl).ToList();
-                    if (objCust != null)
+                    if (entInvoice.BillType != "Estimated")
                     {
-                        if (objCust.Count == 1)
+                        int TransactionId = GetTransactionId();
+                        if (entInvoice.IsCash)
                         {
-                            if (entInvoice.IsCash)
+                            tblCustomerTransaction objDebit = new tblCustomerTransaction()
                             {
-                                tblCustomerTransaction objC = new tblCustomerTransaction()
+                                TransactionId = TransactionId,
+                                IsCash = true,
+                                TransactionDocNo = entInvoice.BillNo,
+                                TransactionType = "Invoice",
+                                BillAmount = entInvoice.NetAmount,
+                                PayAmount = entInvoice.NetAmount,
+                                Discount = entInvoice.FixedDiscount,
+                                PatientId = entInvoice.PatientId,
+                                PreparedByName = entInvoice.PreparedByName,
+                                IsDelete = false,
+                                ReceiptDate = entInvoice.BillDate,
+                            };
+                            objData.tblCustomerTransactions.InsertOnSubmit(objDebit);
+
+                        }
+                        else
+                        {
+                            tblCustomerTransaction objDebit = new tblCustomerTransaction()
+                            {
+                                TransactionId = TransactionId,
+                                IsCash = false,
+                                TransactionDocNo = entInvoice.BillNo,
+                                TransactionType = "Invoice",
+                                BillAmount = entInvoice.NetAmount,
+                                Discount = entInvoice.FixedDiscount,
+                                PatientId = entInvoice.PatientId,
+                                PreparedByName = entInvoice.PreparedByName,
+                                IsDelete = false,
+                                ReceiptDate = entInvoice.BillDate,
+                            };
+                            objData.tblCustomerTransactions.InsertOnSubmit(objDebit);
+                            //objData.SubmitChanges();
+                        }
+                    }
+                    else
+                    {
+                        List<tblCustomerTransaction> objCust = (from tbl in objData.tblCustomerTransactions
+                                                                where tbl.IsDelete == false
+                                                                && tbl.TransactionDocNo == entInvoice.BillNo
+                                                                && tbl.TransactionType == "Invoice"
+                                                                select tbl).ToList();
+                        if (objCust != null)
+                        {
+                            if (objCust.Count == 1)
+                            {
+                                if (entInvoice.IsCash)
                                 {
-                                    PayAmount = entInvoice.NetAmount,
-                                    BillAmount = entInvoice.NetAmount,
-                                    ReceiptDate = entInvoice.BillDate,
-                                    IsCash = entInvoice.IsCash,
-                                    IsDelete = false,
-                                    TransactionDocNo = entInvoice.BillNo,
-                                    TransactionId = objCust[0].TransactionId,
-                                    TransactionType = "Invoice",
-                                    PatientId = entInvoice.PatientId,
-                                };
-                                objData.tblCustomerTransactions.InsertOnSubmit(objC);
-                                foreach (tblCustomerTransaction item in objCust)
-                                {
-                                    item.BillAmount = entInvoice.NetAmount;
-                                    item.ReceiptDate = entInvoice.BillDate;
-                                    item.IsCash = entInvoice.IsCash;
-                                    if (item.IsCash == false)
+                                    tblCustomerTransaction objC = new tblCustomerTransaction()
                                     {
-                                        if (item.PayAmount > 0)
+                                        PayAmount = entInvoice.NetAmount,
+                                        BillAmount = entInvoice.NetAmount,
+                                        Discount = entInvoice.FixedDiscount,
+                                        ReceiptDate = entInvoice.BillDate,
+                                        IsCash = entInvoice.IsCash,
+                                        IsDelete = false,
+                                        TransactionDocNo = entInvoice.BillNo,
+                                        TransactionId = objCust[0].TransactionId,
+                                        TransactionType = "Invoice",
+                                        PatientId = entInvoice.PatientId,
+                                        PreparedByName = entInvoice.PreparedByName,
+                                    };
+                                    objData.tblCustomerTransactions.InsertOnSubmit(objC);
+                                    foreach (tblCustomerTransaction item in objCust)
+                                    {
+                                        item.BillAmount = entInvoice.NetAmount;
+                                        item.ReceiptDate = entInvoice.BillDate;
+                                        item.IsCash = entInvoice.IsCash;
+                                        if (item.IsCash == false)
                                         {
-                                            item.IsDelete = true;
+                                            if (item.PayAmount > 0)
+                                            {
+                                                item.IsDelete = true;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            item.PayAmount = 0;
                                         }
                                     }
-                                    else
+                                }
+                                else
+                                {
+                                    foreach (tblCustomerTransaction item in objCust)
                                     {
-                                        item.PayAmount = 0;
+                                        item.BillAmount = entInvoice.NetAmount;
+                                        item.ReceiptDate = entInvoice.BillDate;
+                                        item.IsCash = entInvoice.IsCash;
+                                        if (item.IsCash == false)
+                                        {
+                                            if (item.PayAmount > 0)
+                                            {
+                                                item.IsDelete = true;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (item.PayAmount > 0)
+                                            {
+                                                item.PayAmount = entInvoice.NetAmount;
+                                            }
+                                            else
+                                            {
+                                                item.PayAmount = 0;
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -699,33 +803,6 @@ namespace MainProjectHos.Models.BusinessLayer
                                 }
                             }
                         }
-                        else
-                        {
-                            foreach (tblCustomerTransaction item in objCust)
-                            {
-                                item.BillAmount = entInvoice.NetAmount;
-                                item.ReceiptDate = entInvoice.BillDate;
-                                item.IsCash = entInvoice.IsCash;
-                                if (item.IsCash == false)
-                                {
-                                    if (item.PayAmount > 0)
-                                    {
-                                        item.IsDelete = true;
-                                    }
-                                }
-                                else
-                                {
-                                    if (item.PayAmount > 0)
-                                    {
-                                        item.PayAmount = entInvoice.NetAmount;
-                                    }
-                                    else
-                                    {
-                                        item.PayAmount = 0;
-                                    }
-                                }
-                            }
-                        }
                     }
 
                     foreach (EntityInvoiceDetails item in lst)
@@ -742,7 +819,9 @@ namespace MainProjectHos.Models.BusinessLayer
                                 cnt.BillNo = entInvoice.BillNo;
                                 cnt.Quantity = item.Quantity;
                                 cnt.NoOfDays = item.NoOfDays;
+                                cnt.Remarks = item.Remarks;
                                 cnt.Amount = item.Amount;
+                                cnt.ChargePerDay = item.PerDayCharge;
                                 cnt.OtherChargesId = item.OtherChargesId;
                                 cnt.IsDelete = item.IsDelete;
                             }
@@ -757,7 +836,9 @@ namespace MainProjectHos.Models.BusinessLayer
                                 DocAllocId = item.DocAllocationId,
                                 OtherChargesId = item.OtherChargesId,
                                 Amount = item.Amount,
+                                ChargePerDay = item.PerDayCharge,
                                 NetAmount = item.NetAmount,
+                                Remarks = item.Remarks,
                                 NoOfDays = item.NoOfDays,
                                 Quantity = item.Quantity,
                                 IsDelete = false

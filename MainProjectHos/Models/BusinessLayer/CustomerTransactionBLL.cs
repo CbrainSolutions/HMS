@@ -23,6 +23,7 @@ namespace MainProjectHos.Models.BusinessLayer
             try
             {
                 lst = (from tbl in objData.tblPatientMasters
+                       orderby tbl.PatientFirstName
                        where tbl.IsDelete == false
                        select new EntityPatientMaster
                        {
@@ -35,6 +36,26 @@ namespace MainProjectHos.Models.BusinessLayer
                 throw ex;
             }
             return lst;
+        }
+
+        public List<EntityPatientMaster> GetPatientList()
+        {
+            try
+            {
+                List<EntityPatientMaster> lst = null;
+
+                lst = (from tbl in objData.tblPatientMasters
+                       join tblAdmint in objData.tblPatientAdmitDetails
+                       on tbl.PKId equals tblAdmint.PatientId
+                       orderby tblAdmint.AdmitId descending
+                       select new EntityPatientMaster { PatientId = tblAdmint.AdmitId, FullName = tbl.PatientFirstName + ' ' + tbl.PatientMiddleName + ' ' + tbl.PatientLastName }).ToList();
+
+                return lst;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         //
         public List<EntityPatientMaster> GetAllocatedPatientInfo()
@@ -75,12 +96,17 @@ namespace MainProjectHos.Models.BusinessLayer
                 {
                     ReceiptDate = entCust.ReceiptDate,
                     PatientId = admit.AdmitId,
+                    PreparedByName = entCust.EmpName,
+                    BillRefNo = entCust.BillRefNo,
                     TransactionId = TransactionId,
                     TransactionType = "Receipt",
                     TransactionDocNo = ReceiptNo,
                     IsCash = true,
                     ISCheque = false,
+                    IsCard = false,
+                    IsRTGS = false,
                     PayAmount = entCust.PayAmount,
+                    AdvanceAmount = entCust.AdvanceAmount,
                     IsDelete = false,
                 };
                 objData.tblCustomerTransactions.InsertOnSubmit(objDebit);
@@ -95,68 +121,164 @@ namespace MainProjectHos.Models.BusinessLayer
                         {
                             ReceiptDate = entCust.ReceiptDate,
                             PatientId = admit.AdmitId,
+                            PreparedByName = entCust.EmpName,
+                            BillRefNo = entCust.BillRefNo,
                             TransactionId = TransactionId,
                             TransactionType = "Receipt",
                             TransactionDocNo = ReceiptNo,
+                            PatientCategory = entCust.PatientCategory,
                             IsCash = false,
                             PayAmount = entCust.PayAmount,
-                            ISCheque = true,
-                            IsDelete = false,
-                        };
-                        objData.tblCustomerTransactions.InsertOnSubmit(objCredit);
-                        tblCustomerTransaction objDebit = new tblCustomerTransaction()
-                        {
-                            ReceiptDate = transact.ReceiptDate,
-                            PatientId = transact.PatientId,
-                            BankId = transact.BankId,
-                            TransactionId = TransactionId,
-                            TransactionType = "Receipt",
-                            TransactionDocNo = ReceiptNo,
-                            ISCheque = true,
-                            PayAmount = transact.PayAmount,
+                            AdvanceAmount = entCust.AdvanceAmount,
                             ChequeDate = transact.ReceiptDate,
                             ChequeNo = transact.ChequeNo,
                             BankName = transact.BankName,
+                            CompanyId = transact.CompanyId,
+                            InsuranceId = transact.InsuranceId,
+                            CompanyName = transact.CompanyName,
+                            InsuranceName = transact.InsuranceName,
+                            ISCheque = true,
+                            IsCard = false,
+                            IsRTGS = false,
                             IsDelete = false,
-                            IsCash = false,
                         };
-                        objData.tblCustomerTransactions.InsertOnSubmit(objDebit);
+                        objData.tblCustomerTransactions.InsertOnSubmit(objCredit);
+                        /* tblCustomerTransaction objDebit = new tblCustomerTransaction()
+                         {
+                             ReceiptDate = transact.ReceiptDate,
+                             PatientId = transact.PatientId,
+                             PreparedBy=transact.PreparedBy,
+                             PreparedByName = transact.EmpName,
+                             BankId = transact.BankId,
+                             DepositedBankName=transact.DepositedBankName,
+                             TransactionId = TransactionId,
+                             TransactionType = "Receipt",
+                             TransactionDocNo = ReceiptNo,
+                             ISCheque = true,
+                             PayAmount = transact.PayAmount,
+                             AdvanceAmount=transact.AdvanceAmount,
+                             ChequeDate = transact.ReceiptDate,
+                             ChequeNo = transact.ChequeNo,
+                             BankName = transact.BankName,
+                             IsDelete = false,
+                             IsCash=false,
+                         };
+                         objData.tblCustomerTransactions.InsertOnSubmit(objDebit); */
                     }
                     else
                     {
-                        tblCustomerTransaction objCredit = new tblCustomerTransaction()
+                        if (Convert.ToBoolean(transact.IsCard))
                         {
-                            ReceiptDate = entCust.ReceiptDate,
-                            PatientId = admit.AdmitId,
-                            TransactionId = TransactionId,
-                            TransactionType = "Receipt",
-                            TransactionDocNo = ReceiptNo,
-                            IsCash = false,
-                            PayAmount = entCust.PayAmount,
-                            ISCheque = false,
-                            IsDelete = false,
-                            ChequeNo = entCust.ChequeNo,
-                            BankName = entCust.BankName,
-                            BillAmount = entCust.BillAmount,
-                        };
-                        objData.tblCustomerTransactions.InsertOnSubmit(objCredit);
-                        tblCustomerTransaction objDebit = new tblCustomerTransaction()
+                            tblCustomerTransaction objCredit = new tblCustomerTransaction()
+                            {
+                                ReceiptDate = entCust.ReceiptDate,
+                                PatientId = admit.AdmitId,
+                                PreparedByName = entCust.EmpName,
+                                BillRefNo = entCust.BillRefNo,
+                                TransactionId = TransactionId,
+                                TransactionType = "Receipt",
+                                TransactionDocNo = ReceiptNo,
+                                PatientCategory = entCust.PatientCategory,
+                                IsCash = false,
+                                ISCheque = false,
+                                IsCard = true,
+                                IsRTGS = false,
+                                PayAmount = entCust.PayAmount,
+                                AdvanceAmount = entCust.AdvanceAmount,
+                                BankRefNo = transact.BankRefNo,
+                                CompanyId = transact.CompanyId,
+                                InsuranceId = transact.InsuranceId,
+                                CompanyName = transact.CompanyName,
+                                InsuranceName = transact.InsuranceName,
+
+                                IsDelete = false,
+                            };
+                            objData.tblCustomerTransactions.InsertOnSubmit(objCredit);
+
+                        }
+                        else
                         {
-                            ReceiptDate = transact.ReceiptDate,
-                            PatientId = transact.PatientId,
-                            BankId = transact.BankId,
-                            TransactionId = TransactionId,
-                            TransactionType = "Receipt",
-                            TransactionDocNo = ReceiptNo,
-                            ISCheque = false,
-                            PayAmount = transact.PayAmount,
-                            ChequeNo = transact.ChequeNo,
-                            BankName = transact.BankName,
-                            IsDelete = false,
-                            IsCash = false,
-                            BillAmount = transact.BillAmount,
-                        };
-                        objData.tblCustomerTransactions.InsertOnSubmit(objDebit);
+                            if (Convert.ToBoolean(transact.IsRTGS))
+                            {
+                                tblCustomerTransaction objCredit = new tblCustomerTransaction()
+                                {
+                                    ReceiptDate = entCust.ReceiptDate,
+                                    PatientId = admit.AdmitId,
+                                    PreparedByName = entCust.EmpName,
+                                    BillRefNo = entCust.BillRefNo,
+                                    TransactionId = TransactionId,
+                                    TransactionType = "Receipt",
+                                    TransactionDocNo = ReceiptNo,
+                                    PatientCategory = entCust.PatientCategory,
+                                    IsCash = false,
+                                    ISCheque = false,
+                                    IsCard = false,
+                                    IsRTGS = true,
+                                    PayAmount = entCust.PayAmount,
+                                    AdvanceAmount = entCust.AdvanceAmount,
+                                    BankRefNo = transact.BankRefNo,
+                                    CompanyId = transact.CompanyId,
+                                    InsuranceId = transact.InsuranceId,
+                                    CompanyName = transact.CompanyName,
+                                    InsuranceName = transact.InsuranceName,
+
+                                    IsDelete = false,
+                                };
+                                objData.tblCustomerTransactions.InsertOnSubmit(objCredit);
+
+                            }
+                            else
+                            {
+                                tblCustomerTransaction objCredit = new tblCustomerTransaction()
+                                {
+                                    ReceiptDate = entCust.ReceiptDate,
+                                    PatientId = admit.AdmitId,
+                                    PreparedByName = entCust.EmpName,
+                                    BillRefNo = entCust.BillRefNo,
+                                    TransactionId = TransactionId,
+                                    TransactionType = "Receipt",
+                                    TransactionDocNo = ReceiptNo,
+                                    IsCash = false,
+                                    PayAmount = entCust.PayAmount,
+                                    AdvanceAmount = entCust.AdvanceAmount,
+                                    ISCheque = false,
+                                    IsDelete = false,
+                                    PatientCategory = entCust.PatientCategory,
+                                    CompanyId = transact.CompanyId,
+                                    InsuranceId = transact.InsuranceId,
+                                    CompanyName = transact.CompanyName,
+                                    InsuranceName = transact.InsuranceName,
+                                    ChequeNo = entCust.ChequeNo,
+                                    BankName = entCust.BankName,
+                                    BillAmount = entCust.BillAmount,
+                                };
+                                objData.tblCustomerTransactions.InsertOnSubmit(objCredit);
+                                tblCustomerTransaction objDebit = new tblCustomerTransaction()
+                                {
+                                    ReceiptDate = transact.ReceiptDate,
+                                    PatientId = transact.PatientId,
+                                    PreparedByName = transact.EmpName,
+                                    BillRefNo = entCust.BillRefNo,
+                                    PatientCategory = entCust.PatientCategory,
+                                    CompanyId = transact.CompanyId,
+                                    InsuranceId = transact.InsuranceId,
+                                    CompanyName = transact.CompanyName,
+                                    InsuranceName = transact.InsuranceName,
+                                    TransactionId = TransactionId,
+                                    TransactionType = "Receipt",
+                                    TransactionDocNo = ReceiptNo,
+                                    ISCheque = false,
+                                    PayAmount = transact.PayAmount,
+                                    AdvanceAmount = transact.AdvanceAmount,
+                                    ChequeNo = transact.ChequeNo,
+                                    BankName = transact.BankName,
+                                    IsDelete = false,
+                                    IsCash = false,
+                                    BillAmount = transact.BillAmount,
+                                };
+                                objData.tblCustomerTransactions.InsertOnSubmit(objDebit);
+                            }
+                        }
                     }
                 }
                 else
@@ -165,13 +287,21 @@ namespace MainProjectHos.Models.BusinessLayer
                     {
                         ReceiptDate = entCust.ReceiptDate,
                         PatientId = admit.AdmitId,
+                        PreparedByName = entCust.EmpName,
+                        BillRefNo = entCust.BillRefNo,
                         TransactionId = TransactionId,
                         TransactionType = "Receipt",
                         TransactionDocNo = ReceiptNo,
                         IsCash = false,
                         PayAmount = entCust.PayAmount,
+                        AdvanceAmount = entCust.AdvanceAmount,
                         ISCheque = false,
                         IsDelete = false,
+                        PatientCategory = entCust.PatientCategory,
+                        CompanyId = transact.CompanyId,
+                        InsuranceId = transact.InsuranceId,
+                        CompanyName = transact.CompanyName,
+                        InsuranceName = transact.InsuranceName,
                         ChequeNo = entCust.ChequeNo,
                         ChequeDate = entCust.ChequeDate,
                         BankName = entCust.BankName,
@@ -182,12 +312,19 @@ namespace MainProjectHos.Models.BusinessLayer
                     {
                         ReceiptDate = transact.ReceiptDate,
                         PatientId = transact.PatientId,
-                        BankId = transact.BankId,
+                        PreparedByName = transact.EmpName,
+                        BillRefNo = entCust.BillRefNo,
+                        PatientCategory = entCust.PatientCategory,
+                        CompanyId = transact.CompanyId,
+                        InsuranceId = transact.InsuranceId,
+                        CompanyName = transact.CompanyName,
+                        InsuranceName = transact.InsuranceName,
                         TransactionId = TransactionId,
                         TransactionType = "Receipt",
                         TransactionDocNo = ReceiptNo,
                         ISCheque = false,
                         PayAmount = transact.PayAmount,
+                        AdvanceAmount = transact.AdvanceAmount,
                         ChequeDate = transact.ReceiptDate,
                         ChequeNo = transact.ChequeNo,
                         BankName = transact.BankName,
@@ -486,6 +623,132 @@ namespace MainProjectHos.Models.BusinessLayer
             return FinalAmount;
         }
 
+        public decimal GetPatientTotalAdvance(int Pat_Id)
+        {
+            List<tblCustomerTransaction> lstTrans = new List<tblCustomerTransaction>();
+            decimal FinalAmount = 0;
+            try
+            {
+                List<tblPatientAdmitDetail> lstAdmit = (from tbl in objData.tblPatientAdmitDetails
+                                                        where tbl.IsDelete == false
+                                                        && tbl.AdmitId == Pat_Id
+                                                        select tbl).ToList();
+                foreach (tblPatientAdmitDetail item in lstAdmit)
+                {
+                    lstTrans.AddRange(from tbl in objData.tblCustomerTransactions
+                                      where tbl.PatientId == item.AdmitId
+                                      //&& tbl.TransactionType.Equals("Refund") == false
+                                      && tbl.IsDelete == false
+                                      select tbl);
+                }
+                FinalAmount = Convert.ToDecimal(lstTrans.Sum(p => p.AdvanceAmount));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return FinalAmount;
+        }
+
+        public decimal GetPatientTotalReceivedAmount(int Pat_Id)
+        {
+            List<tblCustomerTransaction> lstTrans = new List<tblCustomerTransaction>();
+            decimal FinalAmount = 0;
+            try
+            {
+                List<tblPatientAdmitDetail> lstAdmit = (from tbl in objData.tblPatientAdmitDetails
+                                                        where tbl.IsDelete == false
+                                                        && tbl.AdmitId == Pat_Id
+                                                        select tbl).ToList();
+                foreach (tblPatientAdmitDetail item in lstAdmit)
+                {
+                    lstTrans.AddRange(from tbl in objData.tblCustomerTransactions
+                                      where tbl.PatientId == item.AdmitId
+                                      //&& tbl.TransactionType.Equals("Refund") == false
+                                      && tbl.IsDelete == false
+                                      select tbl);
+                }
+                FinalAmount = Convert.ToDecimal(lstTrans.Sum(p => p.AdvanceAmount)) + Convert.ToDecimal(lstTrans.Sum(p => p.PayAmount));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return FinalAmount;
+        }
+
+        public decimal GetPatientRefund(int Pat_Id)
+        {
+            List<tblCustomerTransaction> lstTrans = new List<tblCustomerTransaction>();
+            decimal FinalAmount = 0;
+            try
+            {
+                List<tblPatientAdmitDetail> lstAdmit = (from tbl in objData.tblPatientAdmitDetails
+                                                        where tbl.IsDelete == false
+                                                        && tbl.AdmitId == Pat_Id
+                                                        select tbl).ToList();
+                foreach (tblPatientAdmitDetail item in lstAdmit)
+                {
+                    lstTrans.AddRange(from tbl in objData.tblCustomerTransactions
+                                      where tbl.PatientId == item.AdmitId
+                                      //&& tbl.TransactionType.Equals("Refund") == false
+                                      && tbl.IsDelete == false
+                                      select tbl);
+                }
+                decimal DR = Convert.ToDecimal(lstTrans.Sum(p => p.BillAmount));
+                decimal CR = Convert.ToDecimal(lstTrans.Sum(p => p.PayAmount)) + Convert.ToDecimal(lstTrans.Sum(p => p.AdvanceAmount));
+                if (CR > DR)
+                {
+                    FinalAmount = Convert.ToDecimal(CR - DR);
+                }
+                else
+                {
+                    FinalAmount = 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return FinalAmount;
+        }
+
+        public decimal GetPatientBalance(int Pat_Id)
+        {
+            List<tblCustomerTransaction> lstTrans = new List<tblCustomerTransaction>();
+            decimal FinalAmount = 0;
+            try
+            {
+                List<tblPatientAdmitDetail> lstAdmit = (from tbl in objData.tblPatientAdmitDetails
+                                                        where tbl.IsDelete == false
+                                                        && tbl.AdmitId == Pat_Id
+                                                        select tbl).ToList();
+                foreach (tblPatientAdmitDetail item in lstAdmit)
+                {
+                    lstTrans.AddRange(from tbl in objData.tblCustomerTransactions
+                                      where tbl.PatientId == item.AdmitId
+                                      //&& tbl.TransactionType.Equals("Refund") == false
+                                      && tbl.IsDelete == false
+                                      select tbl);
+                }
+                FinalAmount = Convert.ToDecimal(lstTrans.Sum(p => p.BillAmount)) - (Convert.ToDecimal(lstTrans.Sum(p => p.PayAmount)) + Convert.ToDecimal(lstTrans.Sum(p => p.AdvanceAmount)));
+                if (FinalAmount <= 0)
+                {
+                    FinalAmount = 0;
+                }
+                else
+                {
+                    FinalAmount = Convert.ToDecimal(lstTrans.Sum(p => p.BillAmount)) - (Convert.ToDecimal(lstTrans.Sum(p => p.PayAmount)) + Convert.ToDecimal(lstTrans.Sum(p => p.AdvanceAmount)));
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return FinalAmount;
+        }
+
+
         public decimal GetPatientTrans(int Pat_Id)
         {
             List<tblCustomerTransaction> lstTrans = new List<tblCustomerTransaction>();
@@ -500,11 +763,11 @@ namespace MainProjectHos.Models.BusinessLayer
                 {
                     lstTrans.AddRange(from tbl in objData.tblCustomerTransactions
                                       where tbl.PatientId == item.AdmitId
-                                      && tbl.TransactionType.Equals("Refund") == false
+                                      //&& tbl.TransactionType.Equals("Refund") == false
                                       && tbl.IsDelete == false
                                       select tbl);
                 }
-                FinalAmount = Convert.ToDecimal(lstTrans.Sum(p => p.BillAmount)) - Convert.ToDecimal(lstTrans.Sum(p => p.PayAmount));
+                FinalAmount = Convert.ToDecimal(lstTrans.Sum(p => p.BillAmount)) - (Convert.ToDecimal(lstTrans.Sum(p => p.PayAmount)) + Convert.ToDecimal(lstTrans.Sum(p => p.AdvanceAmount)));
             }
             catch (Exception ex)
             {
@@ -589,15 +852,17 @@ namespace MainProjectHos.Models.BusinessLayer
                         join tblPat in objData.tblPatientMasters
                         on tblAdmit.PatientId equals tblPat.PKId
                         where tbl.IsDelete == false
-                        && tbl.PayAmount > 0
+                        //&& tbl.PayAmount > 0
                         && tbl.TransactionType.Equals("Receipt")
+                        orderby tbl.ReceiptNo descending
                         select new EntityCustomerTransaction
                         {
                             ReceiptNo = tbl.ReceiptNo,
                             ReceiptDate = tbl.ReceiptDate,
                             PatientName = tblPat.PatientFirstName + ' ' + tblPat.PatientMiddleName + ' ' + tblPat.PatientLastName,
                             Address = tblPat.Address,
-                            Amount = tbl.PayAmount
+                            Amount = tbl.PayAmount,
+                            AdvanceAmount = Convert.ToDecimal(tbl.AdvanceAmount)
                         }).ToList();
             }
             catch (Exception ex)
@@ -618,14 +883,11 @@ namespace MainProjectHos.Models.BusinessLayer
                 if (objTransactId != null)
                 {
                     transact = (from tbl in objData.tblCustomerTransactions
-                                join tblBank in objData.tblBankMasters
-                                on tbl.BankId equals tblBank.BankId
                                 where tbl.TransactionId == objTransactId.TransactionId
                                 && tbl.IsDelete == false
                                 && tbl.BillAmount > 0
                                 select new EntityCustomerTransaction
                                 {
-                                    PatientName = tblBank.BankName,
                                     ChequeDate = tbl.ChequeDate,
                                     ChequeNo = tbl.ChequeNo,
                                     BankName = tbl.BankName,
@@ -676,10 +938,17 @@ namespace MainProjectHos.Models.BusinessLayer
                                     item.ChequeNo = entPatient.ChequeNo;
                                     item.ISCheque = entPatient.ISCheque;
                                     item.PayAmount = entPatient.PayAmount;
+                                    item.AdvanceAmount = entPatient.AdvanceAmount;
                                     item.BillAmount = entPatient.BillAmount;
                                     item.TransactionDocNo = cust.TransactionDocNo;
                                     item.ReceiptDate = entPatient.ReceiptDate;
-                                    item.BankId = entPatient.BankId;
+                                    item.PatientId = admit.AdmitId;
+                                    item.PreparedByName = cust.PreparedByName;
+                                    item.PatientCategory = entPatient.PatientCategory;
+                                    item.InsuranceId = entPatient.InsuranceId;
+                                    item.CompanyId = entPatient.CompanyId;
+                                    item.CompanyName = entPatient.CompanyName;
+                                    item.InsuranceName = entPatient.InsuranceName;
                                 }
                                 else
                                 {
@@ -687,13 +956,20 @@ namespace MainProjectHos.Models.BusinessLayer
                                     item.IsDelete = true;
                                     item.TransactionType = "Receipt";
                                     item.BillAmount = entPatient.BillAmount;
+                                    item.AdvanceAmount = entPatient.AdvanceAmount;
                                     item.BankName = entPatient.BankName;
                                     item.ChequeDate = entPatient.ChequeDate;
                                     //item.BankId = ent.BankId;
                                     item.ChequeNo = entPatient.ChequeNo;
                                     item.PatientId = admit.AdmitId;
+                                    item.PatientCategory = entPatient.PatientCategory;
+                                    item.InsuranceId = entPatient.InsuranceId;
+                                    item.CompanyId = entPatient.CompanyId;
+                                    item.CompanyName = entPatient.CompanyName;
+                                    item.InsuranceName = entPatient.InsuranceName;
                                     item.ISCheque = entPatient.ISCheque;
                                     item.PayAmount = entPatient.PayAmount;
+                                    item.PreparedByName = cust.PreparedByName;
                                     item.TransactionDocNo = item.TransactionDocNo;
                                     item.ReceiptDate = entPatient.ReceiptDate;
                                 }
@@ -709,18 +985,24 @@ namespace MainProjectHos.Models.BusinessLayer
                                 {
                                     ReceiptDate = transact.ReceiptDate,
                                     PatientId = admit.AdmitId,
+                                    PreparedByName = transact.EmpName,
                                     TransactionId = cust.TransactionId,
                                     TransactionDocNo = cust.TransactionDocNo,
                                     TransactionType = "Receipt",
                                     ISCheque = false,
                                     PayAmount = transact.PayAmount,
+                                    AdvanceAmount = transact.AdvanceAmount,
                                     ChequeDate = transact.ReceiptDate,
                                     ChequeNo = transact.ChequeNo,
                                     BankName = transact.BankName,
                                     IsDelete = false,
                                     IsCash = false,
                                     BillAmount = transact.BillAmount,
-                                    BankId = transact.BankId,
+                                    PatientCategory = transact.PatientCategory,
+                                    InsuranceId = transact.InsuranceId,
+                                    CompanyId = transact.CompanyId,
+                                    CompanyName = transact.CompanyName,
+                                    InsuranceName = transact.InsuranceName
                                 };
                                 objData.tblCustomerTransactions.InsertOnSubmit(objDebit);
                             }
@@ -740,10 +1022,15 @@ namespace MainProjectHos.Models.BusinessLayer
                                             item.ChequeNo = entPatient.ChequeNo;
                                             item.ISCheque = entPatient.ISCheque;
                                             item.PayAmount = entPatient.PayAmount;
+                                            item.AdvanceAmount = entPatient.AdvanceAmount;
                                             item.BillAmount = entPatient.BillAmount;
                                             item.TransactionDocNo = cust.TransactionDocNo;
                                             item.ReceiptDate = entPatient.ReceiptDate;
-                                            item.BankId = entPatient.BankId;
+                                            item.PatientCategory = entPatient.PatientCategory;
+                                            item.InsuranceId = entPatient.InsuranceId;
+                                            item.CompanyId = entPatient.CompanyId;
+                                            item.CompanyName = entPatient.CompanyName;
+                                            item.InsuranceName = entPatient.InsuranceName;
                                         }
                                         else
                                         {
@@ -758,8 +1045,14 @@ namespace MainProjectHos.Models.BusinessLayer
                                             item.PatientId = admit.AdmitId;
                                             item.ISCheque = entPatient.ISCheque;
                                             item.PayAmount = entPatient.PayAmount;
+                                            item.AdvanceAmount = entPatient.AdvanceAmount;
                                             item.TransactionDocNo = item.TransactionDocNo;
                                             item.ReceiptDate = entPatient.ReceiptDate;
+                                            item.PatientCategory = entPatient.PatientCategory;
+                                            item.InsuranceId = entPatient.InsuranceId;
+                                            item.CompanyId = entPatient.CompanyId;
+                                            item.CompanyName = entPatient.CompanyName;
+                                            item.InsuranceName = entPatient.InsuranceName;
                                         }
                                     }
                                     #endregion
@@ -784,10 +1077,15 @@ namespace MainProjectHos.Models.BusinessLayer
                                     item.ChequeNo = transact.ChequeNo;
                                     item.ISCheque = transact.ISCheque;
                                     item.PayAmount = transact.PayAmount;
+                                    item.AdvanceAmount = entPatient.AdvanceAmount;
                                     item.BillAmount = transact.BillAmount;
                                     item.TransactionDocNo = item.TransactionDocNo;
                                     item.ReceiptDate = transact.ReceiptDate;
-                                    item.BankId = transact.BankId;
+                                    item.PatientCategory = entPatient.PatientCategory;
+                                    item.InsuranceId = entPatient.InsuranceId;
+                                    item.CompanyId = entPatient.CompanyId;
+                                    item.CompanyName = entPatient.CompanyName;
+                                    item.InsuranceName = entPatient.InsuranceName;
                                 }
                                 else
                                 {
@@ -799,9 +1097,15 @@ namespace MainProjectHos.Models.BusinessLayer
                                     item.ChequeNo = entPatient.ChequeNo;
                                     item.ISCheque = entPatient.ISCheque;
                                     item.PayAmount = entPatient.PayAmount;
+                                    item.AdvanceAmount = entPatient.AdvanceAmount;
                                     item.TransactionDocNo = item.TransactionDocNo;
                                     item.PatientId = admit.AdmitId;
                                     item.ReceiptDate = entPatient.ReceiptDate;
+                                    item.PatientCategory = entPatient.PatientCategory;
+                                    item.InsuranceId = entPatient.InsuranceId;
+                                    item.CompanyId = entPatient.CompanyId;
+                                    item.CompanyName = entPatient.CompanyName;
+                                    item.InsuranceName = entPatient.InsuranceName;
                                     //item.BankId = transact.BankId;
                                 }
                             }
@@ -814,18 +1118,24 @@ namespace MainProjectHos.Models.BusinessLayer
                                 {
                                     ReceiptDate = transact.ReceiptDate,
                                     //PatientId = admit.AdmitId,
+                                    PreparedByName = transact.EmpName,
                                     TransactionId = cust.TransactionId,
                                     TransactionDocNo = cust.TransactionDocNo,
                                     TransactionType = "Receipt",
                                     ISCheque = false,
                                     PayAmount = transact.PayAmount,
+                                    AdvanceAmount = transact.AdvanceAmount,
                                     ChequeDate = transact.ChequeDate,
                                     ChequeNo = transact.ChequeNo,
                                     BankName = transact.BankName,
                                     IsDelete = false,
                                     IsCash = false,
                                     BillAmount = transact.BillAmount,
-                                    BankId = transact.BankId,
+                                    PatientCategory = transact.PatientCategory,
+                                    InsuranceId = transact.InsuranceId,
+                                    CompanyId = transact.CompanyId,
+                                    CompanyName = transact.CompanyName,
+                                    InsuranceName = transact.InsuranceName
                                 };
                                 objData.tblCustomerTransactions.InsertOnSubmit(objDebit);
                                 foreach (tblCustomerTransaction item in lst)
@@ -833,6 +1143,7 @@ namespace MainProjectHos.Models.BusinessLayer
                                     if (Convert.ToDecimal(item.PayAmount) > 0)
                                     {
                                         item.PayAmount = entPatient.PayAmount;
+                                        item.AdvanceAmount = entPatient.AdvanceAmount;
                                         item.IsCash = false;
                                         item.ISCheque = entPatient.ISCheque;
                                     }
@@ -852,10 +1163,15 @@ namespace MainProjectHos.Models.BusinessLayer
                                         item.ChequeNo = transact.ChequeNo;
                                         item.ISCheque = transact.ISCheque;
                                         item.PayAmount = transact.PayAmount;
+                                        item.AdvanceAmount = entPatient.AdvanceAmount;
                                         item.BillAmount = transact.BillAmount;
                                         item.TransactionDocNo = item.TransactionDocNo;
                                         item.ReceiptDate = transact.ReceiptDate;
-                                        item.BankId = transact.BankId;
+                                        item.PatientCategory = entPatient.PatientCategory;
+                                        item.InsuranceId = entPatient.InsuranceId;
+                                        item.CompanyId = entPatient.CompanyId;
+                                        item.CompanyName = entPatient.CompanyName;
+                                        item.InsuranceName = entPatient.InsuranceName;
                                     }
                                     else
                                     {
@@ -867,9 +1183,14 @@ namespace MainProjectHos.Models.BusinessLayer
                                         item.ChequeNo = entPatient.ChequeNo;
                                         item.ISCheque = entPatient.ISCheque;
                                         item.PayAmount = entPatient.PayAmount;
+                                        item.AdvanceAmount = entPatient.AdvanceAmount;
                                         item.TransactionDocNo = item.TransactionDocNo;
                                         item.ReceiptDate = entPatient.ReceiptDate;
-                                        item.BankId = entPatient.BankId;
+                                        item.PatientCategory = entPatient.PatientCategory;
+                                        item.InsuranceId = entPatient.InsuranceId;
+                                        item.CompanyId = entPatient.CompanyId;
+                                        item.CompanyName = entPatient.CompanyName;
+                                        item.InsuranceName = entPatient.InsuranceName;
                                     }
                                 }
                             }
@@ -1237,6 +1558,18 @@ namespace MainProjectHos.Models.BusinessLayer
                 throw ex;
             }
             return lst;
+        }
+
+        public EntityPatientInvoice GetPatientBillRefNo(int Pat)
+        {
+            EntityPatientInvoice cate = (from tbl in objData.tblPatientInvoices
+                                         join tblAdmit in objData.tblPatientAdmitDetails
+                                         on tbl.PatientId equals tblAdmit.AdmitId
+                                         join tblPat in objData.tblPatientMasters
+                                         on tblAdmit.PatientId equals tblPat.PKId
+                                         where tblPat.PKId.Equals(Pat)
+                                         select new EntityPatientInvoice { PatientId = tbl.PatientId, BillNo = tbl.BillNo }).SingleOrDefault();
+            return cate;
         }
 
         public List<tblCustomerTransaction> GetPatientTransByPatientAdmitId(int AdmitId)

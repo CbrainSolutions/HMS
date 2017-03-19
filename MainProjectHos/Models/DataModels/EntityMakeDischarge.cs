@@ -480,5 +480,29 @@ namespace MainProjectHos.Models.DataModels
             }
         }
 
+        public object NameOfSurgery { get; internal set; }
+        public string OperationalProcedure { get; internal set; }
+        public string Haemogram { get; internal set; }
+        public string AdviceOnDischarge { get; internal set; }
+        public string ECG { get; internal set; }
+        public string SCreat { get; internal set; }
+        public string SElect { get; internal set; }
+        public string UrineR { get; internal set; }
+        public string Temp { get; internal set; }
+        public string Pulse { get; internal set; }
+        public string BP { get; internal set; }
+        public string RespRate { get; internal set; }
+        public string Pallor { get; internal set; }
+        public string Oedema { get; internal set; }
+        public string Cyanosis { get; internal set; }
+        public string Clubbing { get; internal set; }
+        public string Icterus { get; internal set; }
+        public string Skin { get; internal set; }
+        public string RespSystem { get; internal set; }
+        public string CNS { get; internal set; }
+        public string PerAbd { get; internal set; }
+        public string CVS { get; internal set; }
+        public int SurgeryId { get; internal set; }
+        public string PreparedByName { get; internal set; }
     }
 }

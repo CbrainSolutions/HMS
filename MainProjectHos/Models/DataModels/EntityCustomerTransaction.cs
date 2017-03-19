@@ -306,5 +306,18 @@ namespace MainProjectHos.Models.DataModels
                 }
             }
         }
+
+        public int InsuranceId { get; internal set; }
+        public int CompanyId { get; internal set; }
+        public string CompanyName { get; internal set; }
+        public string InsuranceName { get; internal set; }
+        public decimal AdvanceAmount { get; internal set; }
+        public bool IsCard { get; internal set; }
+        public bool IsRTGS { get; internal set; }
+        public string BankRefNo { get; internal set; }
+        public string BillRefNo { get; internal set; }
+        public string PatientCategory { get; internal set; }
+        public string EmpName { get; internal set; }
+        public decimal TDSAmt { get; internal set; }
     }
 }

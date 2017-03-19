@@ -193,5 +193,7 @@ namespace MainProjectHos.Models.DataModels
         public decimal BalanceAmount { get; set; }
         public decimal ReceivedAmount { get; set; }
         public decimal RefundAmount { get; set; }
+        public string PatientType { get; internal set; }
+        public object ShiftDate { get; internal set; }
     }
 }

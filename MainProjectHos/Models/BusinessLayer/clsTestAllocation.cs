@@ -16,6 +16,51 @@ namespace MainProjectHos.Models.BusinessLayer
 
         public CriticareHospitalDataContext objData { get; set; }
 
+        public List<EntityPatientMaster> GetAdmitPatientList()
+        {
+            List<EntityPatientMaster> lst = null;
+            try
+            {
+                lst = (from tbl in objData.tblPatientMasters
+                       join tblAdmit in objData.tblPatientAdmitDetails
+                       on tbl.PKId equals tblAdmit.PatientId
+                       where tblAdmit.IsDelete == false && tblAdmit.IsDischarge == false
+                       select new EntityPatientMaster
+                       {
+                           PatientId = Convert.ToInt32(tblAdmit.AdmitId),
+                           FullName = tbl.PatientFirstName + " " + tbl.PatientMiddleName + " " + tbl.PatientLastName
+                       }).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return lst;
+        }
+        public List<EntityPatientMaster> GetPatientListForDischarge()
+        {
+            List<EntityPatientMaster> lst = null;
+            try
+            {
+                lst = (from tbl in objData.tblPatientMasters
+                       join tblAdmit in objData.tblPatientAdmitDetails
+                       on tbl.PKId equals tblAdmit.PatientId
+                       where tblAdmit.IsDelete == false
+                       select new EntityPatientMaster
+                       {
+                           PatientId = Convert.ToInt32(tblAdmit.AdmitId),
+                           FullName = tbl.PatientFirstName + " " + tbl.PatientMiddleName + " " + tbl.PatientLastName
+                       }).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return lst;
+        }
+
         public List<EntityPatientMaster> GetAllocatedPatient()
         {
             List<EntityPatientMaster> lst = null;
@@ -25,7 +70,6 @@ namespace MainProjectHos.Models.BusinessLayer
                        join tblAdmit in objData.tblPatientAdmitDetails
                        on tbl.PKId equals tblAdmit.PatientId
                        where tblAdmit.IsDelete == false
-                       && tblAdmit.IsDischarge == false
                        select new EntityPatientMaster
                        {
                            PatientId = Convert.ToInt32(tblAdmit.AdmitId),
