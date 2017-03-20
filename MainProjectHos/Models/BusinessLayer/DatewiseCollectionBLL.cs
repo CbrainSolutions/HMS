@@ -25,5 +25,41 @@ namespace MainProjectHos.Models.BusinessLayer
                 throw ex;
             }
         }
+
+        public List<STP_DatewiseConsultDoctorResult> SearchDatewiseConsultDoctor(DateTime fromdate, DateTime todate, int deptCatId, int deptDocId)
+        {
+            try
+            {
+                return (objData.STP_DatewiseConsultDoctor(fromdate, todate, deptCatId, deptDocId)).ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<STP_DatewiseConsultDoctorCatResult> SearchDatewiseConsultDoctorCat(DateTime fromdate, DateTime todate, int deptCatId)
+        {
+            try
+            {
+                return (objData.STP_DatewiseConsultDoctorCat(fromdate, todate, deptCatId)).ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<STP_DatewiseConsultDoctorDocResult> SearchDatewiseConsultDoctorDoc(DateTime fromdate, DateTime todate, int deptDocId)
+        {
+            try
+            {
+                return (objData.STP_DatewiseConsultDoctorDoc(fromdate, todate, deptDocId)).ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
